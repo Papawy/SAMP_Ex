@@ -10,11 +10,17 @@ using System.Windows.Forms;
 
 namespace SAMP_Ex
 {
-    public partial class Form1 : Form
+    public partial class mainWindow : Form
     {
-        public Form1()
+        public mainWindow()
         {
             InitializeComponent();
         }
+
+        private void btn_Quit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }
