@@ -155,7 +155,7 @@ namespace SAMP_Ex
 
 
         // It is a conversion of https://github.com/Whitetigerswt/samp_launcher main code in C#
-        public static bool LaunchGTA(string ip, ushort port, string nickname, string password = "", bool debug = false)
+        public static bool LaunchGTA(string ip, string port, string nickname, string password = "", bool debug = false)
         {
             string gtaExeLocation = GetGTADir() + @"\gta_sa.exe";
             string gtaExeArgs;
@@ -164,9 +164,9 @@ namespace SAMP_Ex
             STARTUPINFO StartupInfo = new STARTUPINFO();
 
             if (debug == false)
-                gtaExeArgs = "-c -h " + ip + " -p " + port.ToString() + " -n " + nickname;
+                gtaExeArgs = "-c -h " + ip + " -p " + port + " -n " + nickname;
             else
-                gtaExeArgs = "-d -h " + ip + " -p " + port.ToString() + " -n " + nickname;
+                gtaExeArgs = "-d -h " + ip + " -p " + port + " -n " + nickname;
 
             if (password.Length != 0)
                 gtaExeArgs += " -z " + password;
