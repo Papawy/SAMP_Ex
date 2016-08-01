@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(quickConnectWindow));
             this.lbl_hostAddr = new System.Windows.Forms.Label();
             this.txtBox_hostAddr = new System.Windows.Forms.TextBox();
             this.txtBox_port = new System.Windows.Forms.TextBox();
@@ -164,6 +165,7 @@
             this.Controls.Add(this.txtBox_hostAddr);
             this.Controls.Add(this.lbl_hostAddr);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "quickConnectWindow";
             this.Text = "Quick Connect";
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();

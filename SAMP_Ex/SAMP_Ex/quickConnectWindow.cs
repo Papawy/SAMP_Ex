@@ -44,6 +44,9 @@ namespace SAMP_Ex
                 GtaLauncher.LaunchGTA(txtBox_hostAddr.Text, txtBox_port.Text, txtBox_nickname.Text, txtBox_password.Text, true);
             else
                 GtaLauncher.LaunchGTA(txtBox_hostAddr.Text, txtBox_port.Text, txtBox_nickname.Text, txtBox_password.Text);
+
+            this.Close();
+            return;
         }
 
         public async void ShowErrorLabel(int timeInMilliseconds)
