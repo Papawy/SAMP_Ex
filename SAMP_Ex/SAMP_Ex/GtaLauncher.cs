@@ -153,11 +153,35 @@ namespace SAMP_Ex
             }
         }
 
+        public static bool SetGTADir(string dir)
+        {
+            try
+            {
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\SAMP"))
+                {
+                    if (key != null)
+                    {
+                        Object o = dir;
+                        key.SetValue("gta_sa_exe", o);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
 
         // It is a conversion of https://github.com/Whitetigerswt/samp_launcher main code in C#
         public static bool LaunchGTA(string ip, string port, string nickname, string password = "", bool debug = false)
         {
-            string gtaExeLocation = GetGTADir() + @"\gta_sa.exe";
+
+            string gtaExeLocation = ConfigFile.GetUserConfig("gtapath");
+            if(gtaExeLocation.Length == 0)
+                gtaExeLocation = GetGTADir() + @"\gta_sa.exe";
+
             string gtaExeArgs;
 
             PROCESS_INFORMATION ProcessInfo = new PROCESS_INFORMATION();
