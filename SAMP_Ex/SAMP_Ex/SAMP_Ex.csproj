@@ -97,6 +97,7 @@
     <EmbeddedResource Include="settingsWindow.resx">
       <DependentUpon>settingsWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Icons\add.png" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -154,6 +155,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Icons\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\play-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\multiply-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\settings-6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\multiply.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\garbage-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\idea.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\exit-1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
