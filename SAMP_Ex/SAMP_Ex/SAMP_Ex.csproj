@@ -52,6 +52,7 @@
     <Compile Include="aboutWindow.Designer.cs">
       <DependentUpon>aboutWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConfigFile.cs" />
     <Compile Include="GtaLauncher.cs" />
     <Compile Include="mainWindow.cs">
       <SubType>Form</SubType>
@@ -66,6 +67,12 @@
     </Compile>
     <Compile Include="quickConnectWindow.Designer.cs">
       <DependentUpon>quickConnectWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="settingsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="settingsWindow.Designer.cs">
+      <DependentUpon>settingsWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="aboutWindow.resx">
@@ -86,6 +93,9 @@
     </Compile>
     <EmbeddedResource Include="quickConnectWindow.resx">
       <DependentUpon>quickConnectWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="settingsWindow.resx">
+      <DependentUpon>settingsWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -141,6 +151,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Icons\logo.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\folder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
