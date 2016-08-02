@@ -37,14 +37,14 @@
             // richText_about
             // 
             this.richText_about.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richText_about.Location = new System.Drawing.Point(121, 157);
+            this.richText_about.Cursor = System.Windows.Forms.Cursors.Default;
+            this.richText_about.Location = new System.Drawing.Point(63, 157);
             this.richText_about.Name = "richText_about";
             this.richText_about.ReadOnly = true;
             this.richText_about.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.richText_about.Size = new System.Drawing.Size(180, 92);
+            this.richText_about.Size = new System.Drawing.Size(301, 92);
             this.richText_about.TabIndex = 0;
-            this.richText_about.Text = "SAMP Ex launcher made by\nPapawy & S4t3k\nfrom https://sa-mp-fr.com\n\nSpecial thanks" +
-    " to the SAMP team\n";
+            this.richText_about.Text = resources.GetString("richText_about.Text");
             this.richText_about.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richText_about_LinkClicked);
             // 
             // pictureBox1

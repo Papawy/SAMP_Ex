@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainWindow));
             this.grid_ServerList = new System.Windows.Forms.DataGridView();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStrip_main = new System.Windows.Forms.MenuStrip();
             this.menu_files = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -82,7 +82,7 @@
             this.grid_playerList = new System.Windows.Forms.DataGridView();
             this.grid_serverInfo = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.grid_ServerList)).BeginInit();
-            this.menuStrip1.SuspendLayout();
+            this.menuStrip_main.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabCtrl_serversLists.SuspendLayout();
             this.toolStrip_quickBtn.SuspendLayout();
@@ -108,19 +108,19 @@
             this.grid_ServerList.Size = new System.Drawing.Size(567, 353);
             this.grid_ServerList.TabIndex = 0;
             // 
-            // menuStrip1
+            // menuStrip_main
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStrip_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu_files,
             this.quickConnectToolStripMenuItem,
             this.menu_servers,
             this.menu_tools,
             this.menu_help});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(984, 24);
-            this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip_main.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip_main.Name = "menuStrip_main";
+            this.menuStrip_main.Size = new System.Drawing.Size(984, 24);
+            this.menuStrip_main.TabIndex = 2;
+            this.menuStrip_main.Text = "mainMenu";
             // 
             // menu_files
             // 
@@ -606,16 +606,16 @@
             this.Controls.Add(this.toolStrip_quickBtn);
             this.Controls.Add(this.tabCtrl_serversLists);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.menuStrip_main);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.menuStrip_main;
             this.MinimumSize = new System.Drawing.Size(500, 500);
             this.Name = "mainWindow";
             this.Text = "SAMP Ex";
             this.Load += new System.EventHandler(this.mainWindow_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grid_ServerList)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuStrip_main.ResumeLayout(false);
+            this.menuStrip_main.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tabCtrl_serversLists.ResumeLayout(false);
@@ -640,7 +640,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView grid_ServerList;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuStrip_main;
         private System.Windows.Forms.ToolStripMenuItem menu_files;
         private System.Windows.Forms.ToolStripMenuItem menuItm_importFavoritesListFromSAMP;
         private System.Windows.Forms.ToolStripMenuItem menuItm_importFavoritesList;
