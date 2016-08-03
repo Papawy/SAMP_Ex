@@ -10,7 +10,7 @@ using Microsoft.Win32;
 
 namespace SAMP_Ex
 {
-    class GtaLauncher
+    class GTAUtils
     {
         #region WinAPI Wrapper
 
@@ -175,7 +175,7 @@ namespace SAMP_Ex
         }
 
         // It is a conversion of https://github.com/Whitetigerswt/samp_launcher main code in C#
-        public static bool LaunchGTA(string ip, string port, string nickname, string password = "", bool debug = false)
+        public static bool LaunchGTAInjected(string ip, string port, string nickname, string password = "", bool debug = false)
         {
 
             string gtaExeLocation = ConfigFile.GetUserConfig("gtapath");

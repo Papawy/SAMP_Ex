@@ -44,7 +44,9 @@
             this.richText_about.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.richText_about.Size = new System.Drawing.Size(301, 92);
             this.richText_about.TabIndex = 0;
-            this.richText_about.Text = resources.GetString("richText_about.Text");
+            this.richText_about.Text = "SAMP Ex launcher made by\nPapawy & S4t3k & all contributors\nIcons designed by Made" +
+    "byoliver  and distributed by Flaticon\n\nfrom https://sa-mp-fr.com\n\nSpecial thanks" +
+    " to the SAMP team";
             this.richText_about.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richText_about_LinkClicked);
             // 
             // pictureBox1

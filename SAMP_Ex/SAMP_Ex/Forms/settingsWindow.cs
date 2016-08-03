@@ -18,7 +18,7 @@ namespace SAMP_Ex
             fileDialog_gtaSaExe.Filter = "Exe Files|*.exe";
             string gtaPath = ConfigFile.GetUserConfig("gtapath");
             if (gtaPath.Length == 0)
-                txtBox_gtaPath.Text = GtaLauncher.GetGTADir();
+                txtBox_gtaPath.Text = GTAUtils.GetGTADir();
             else
                 txtBox_gtaPath.Text = gtaPath;
 

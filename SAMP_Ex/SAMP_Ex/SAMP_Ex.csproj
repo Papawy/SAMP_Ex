@@ -46,39 +46,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="aboutWindow.cs">
+    <Compile Include="Forms\aboutWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="aboutWindow.Designer.cs">
+    <Compile Include="Forms\aboutWindow.Designer.cs">
       <DependentUpon>aboutWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConfigFile.cs" />
-    <Compile Include="GtaLauncher.cs" />
-    <Compile Include="mainWindow.cs">
+    <Compile Include="Class\ConfigFile.cs" />
+    <Compile Include="Class\GTAUtils.cs" />
+    <Compile Include="Forms\mainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="mainWindow.Designer.cs">
+    <Compile Include="Forms\mainWindow.Designer.cs">
       <DependentUpon>mainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="quickConnectWindow.cs">
+    <Compile Include="Forms\quickConnectWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="quickConnectWindow.Designer.cs">
+    <Compile Include="Forms\quickConnectWindow.Designer.cs">
       <DependentUpon>quickConnectWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="settingsWindow.cs">
+    <Compile Include="Forms\settingsWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="settingsWindow.Designer.cs">
+    <Compile Include="Forms\settingsWindow.Designer.cs">
       <DependentUpon>settingsWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utils.cs" />
-    <EmbeddedResource Include="aboutWindow.resx">
+    <Compile Include="Class\Utils.cs" />
+    <EmbeddedResource Include="Forms\aboutWindow.resx">
       <DependentUpon>aboutWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="mainWindow.resx">
+    <EmbeddedResource Include="Forms\mainWindow.resx">
       <DependentUpon>mainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -91,10 +91,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="quickConnectWindow.resx">
+    <EmbeddedResource Include="Forms\quickConnectWindow.resx">
       <DependentUpon>quickConnectWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="settingsWindow.resx">
+    <EmbeddedResource Include="Forms\settingsWindow.resx">
       <DependentUpon>settingsWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Icons\add.png" />

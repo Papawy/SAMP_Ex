@@ -26,7 +26,7 @@ namespace SAMP_Ex
                     new XElement("configuration",
                         new XElement("user",
                             new XElement("defaultnick", ""),
-                            new XElement("gtapath", GtaLauncher.GetGTADir()))));
+                            new XElement("gtapath", GTAUtils.GetGTADir()))));
 
                 doc.Save(System.IO.Directory.GetCurrentDirectory() + @"\\config.xml");
             }

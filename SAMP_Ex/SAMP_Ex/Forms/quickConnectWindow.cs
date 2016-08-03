@@ -41,9 +41,9 @@ namespace SAMP_Ex
             if (errorOccured) { ShowErrorLabel(5000); return; }
 
             if(chckBox_debugMode.Checked)
-                GtaLauncher.LaunchGTA(txtBox_hostAddr.Text, txtBox_port.Text, txtBox_nickname.Text, txtBox_password.Text, true);
+                GTAUtils.LaunchGTAInjected(txtBox_hostAddr.Text, txtBox_port.Text, txtBox_nickname.Text, txtBox_password.Text, true);
             else
-                GtaLauncher.LaunchGTA(txtBox_hostAddr.Text, txtBox_port.Text, txtBox_nickname.Text, txtBox_password.Text);
+                GTAUtils.LaunchGTAInjected(txtBox_hostAddr.Text, txtBox_port.Text, txtBox_nickname.Text, txtBox_password.Text);
 
             this.Close();
             return;
