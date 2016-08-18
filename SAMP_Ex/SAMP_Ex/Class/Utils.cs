@@ -41,5 +41,29 @@ namespace SAMP_Ex
             else
                 return false;
         }
+
+        public static string ParseIPFromIPPort(string ipport)
+        {
+            try
+            {
+                return ipport.Split(':')[0];
+            }
+            catch(IndexOutOfRangeException ex)
+            {
+                return "";
+            }
+        }
+
+        public static string ParsePortFromIPPort(string ipport)
+        {
+            try
+            {
+                return ipport.Split(':')[1];
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                return "";
+            }
+        }
     }
 }
