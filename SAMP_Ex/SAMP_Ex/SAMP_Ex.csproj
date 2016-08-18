@@ -46,6 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\Server.cs" />
+    <Compile Include="Class\ServerList.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\aboutWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,6 +186,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Icons\exit-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\locked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\locked-1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
