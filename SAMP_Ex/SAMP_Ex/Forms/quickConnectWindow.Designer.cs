@@ -31,8 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(quickConnectWindow));
             this.lbl_hostAddr = new System.Windows.Forms.Label();
             this.txtBox_hostAddr = new System.Windows.Forms.TextBox();
-            this.txtBox_port = new System.Windows.Forms.TextBox();
-            this.lbl_port = new System.Windows.Forms.Label();
             this.txtBox_nickname = new System.Windows.Forms.TextBox();
             this.lbl_nickname = new System.Windows.Forms.Label();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
@@ -59,28 +57,11 @@
             this.txtBox_hostAddr.Name = "txtBox_hostAddr";
             this.txtBox_hostAddr.Size = new System.Drawing.Size(100, 20);
             this.txtBox_hostAddr.TabIndex = 1;
-            this.txtBox_hostAddr.Text = "127.0.0.1";
-            // 
-            // txtBox_port
-            // 
-            this.txtBox_port.Location = new System.Drawing.Point(42, 85);
-            this.txtBox_port.Name = "txtBox_port";
-            this.txtBox_port.Size = new System.Drawing.Size(100, 20);
-            this.txtBox_port.TabIndex = 3;
-            this.txtBox_port.Text = "7777";
-            // 
-            // lbl_port
-            // 
-            this.lbl_port.AutoSize = true;
-            this.lbl_port.Location = new System.Drawing.Point(12, 70);
-            this.lbl_port.Name = "lbl_port";
-            this.lbl_port.Size = new System.Drawing.Size(50, 13);
-            this.lbl_port.TabIndex = 2;
-            this.lbl_port.Text = "Host port";
+            this.txtBox_hostAddr.Text = "127.0.0.1:7777";
             // 
             // txtBox_nickname
             // 
-            this.txtBox_nickname.Location = new System.Drawing.Point(42, 138);
+            this.txtBox_nickname.Location = new System.Drawing.Point(40, 86);
             this.txtBox_nickname.Name = "txtBox_nickname";
             this.txtBox_nickname.Size = new System.Drawing.Size(100, 20);
             this.txtBox_nickname.TabIndex = 5;
@@ -88,7 +69,7 @@
             // lbl_nickname
             // 
             this.lbl_nickname.AutoSize = true;
-            this.lbl_nickname.Location = new System.Drawing.Point(12, 123);
+            this.lbl_nickname.Location = new System.Drawing.Point(10, 70);
             this.lbl_nickname.Name = "lbl_nickname";
             this.lbl_nickname.Size = new System.Drawing.Size(55, 13);
             this.lbl_nickname.TabIndex = 4;
@@ -124,7 +105,7 @@
             // chckBox_debugMode
             // 
             this.chckBox_debugMode.AutoSize = true;
-            this.chckBox_debugMode.Location = new System.Drawing.Point(220, 141);
+            this.chckBox_debugMode.Location = new System.Drawing.Point(202, 38);
             this.chckBox_debugMode.Name = "chckBox_debugMode";
             this.chckBox_debugMode.Size = new System.Drawing.Size(87, 17);
             this.chckBox_debugMode.TabIndex = 8;
@@ -133,7 +114,7 @@
             // 
             // txtBox_password
             // 
-            this.txtBox_password.Location = new System.Drawing.Point(205, 85);
+            this.txtBox_password.Location = new System.Drawing.Point(40, 136);
             this.txtBox_password.Name = "txtBox_password";
             this.txtBox_password.Size = new System.Drawing.Size(100, 20);
             this.txtBox_password.TabIndex = 10;
@@ -141,7 +122,7 @@
             // lbl_password
             // 
             this.lbl_password.AutoSize = true;
-            this.lbl_password.Location = new System.Drawing.Point(175, 70);
+            this.lbl_password.Location = new System.Drawing.Point(10, 121);
             this.lbl_password.Name = "lbl_password";
             this.lbl_password.Size = new System.Drawing.Size(99, 13);
             this.lbl_password.TabIndex = 9;
@@ -160,8 +141,6 @@
             this.Controls.Add(this.lbl_error);
             this.Controls.Add(this.txtBox_nickname);
             this.Controls.Add(this.lbl_nickname);
-            this.Controls.Add(this.txtBox_port);
-            this.Controls.Add(this.lbl_port);
             this.Controls.Add(this.txtBox_hostAddr);
             this.Controls.Add(this.lbl_hostAddr);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -178,8 +157,6 @@
 
         private System.Windows.Forms.Label lbl_hostAddr;
         private System.Windows.Forms.TextBox txtBox_hostAddr;
-        private System.Windows.Forms.TextBox txtBox_port;
-        private System.Windows.Forms.Label lbl_port;
         private System.Windows.Forms.TextBox txtBox_nickname;
         private System.Windows.Forms.Label lbl_nickname;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
