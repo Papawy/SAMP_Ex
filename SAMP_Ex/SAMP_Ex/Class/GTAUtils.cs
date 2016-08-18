@@ -178,7 +178,7 @@ namespace SAMP_Ex
         public static bool LaunchGTAInjected(string ip, string port, string nickname, string password = "", bool debug = false)
         {
 
-            string gtaExeLocation = ConfigFile.GetUserConfig("gtapath");
+            string gtaExeLocation = ConfigFile.GetUserConfig("gtapath") + @"\gta_sa.exe";
             if(gtaExeLocation.Length == 0)
                 gtaExeLocation = GetGTADir() + @"\gta_sa.exe";
 
