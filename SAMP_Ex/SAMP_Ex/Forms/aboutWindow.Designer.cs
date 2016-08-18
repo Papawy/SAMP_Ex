@@ -36,6 +36,7 @@
             // 
             // richText_about
             // 
+            this.richText_about.BackColor = System.Drawing.Color.White;
             this.richText_about.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richText_about.Cursor = System.Windows.Forms.Cursors.Default;
             this.richText_about.Location = new System.Drawing.Point(63, 157);
@@ -63,6 +64,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(434, 261);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.richText_about);
