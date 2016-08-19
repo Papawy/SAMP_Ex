@@ -31,11 +31,27 @@ namespace SAMP_Ex
                 doc.Save(System.IO.Directory.GetCurrentDirectory() + @"\\config.xml");
             }
 
+            Server myServ = new Server("5.196.72.69", "7777");
+
+            if(myServ.UpdateInfos())
+            {
+                grpBox_serverInfos.Text = "Server info : " + myServ.Hostname;
+            }
+            else
+            {
+                grpBox_serverInfos.Text = "Server info : " + "not found";
+            }
+
+            myServ.UpdatePlayerList();
+            myServ.UpdatePing();
+
+            grid_serverList.AddServer(myServ);
+
         }
 
         private void InitializeServerGridView()
         {
-            grid_ServerList.AutoGenerateColumns = true;
+            grid_serverList.AutoGenerateColumns = true;
         }
 
         private void mainWindow_Load(object sender, EventArgs e)
