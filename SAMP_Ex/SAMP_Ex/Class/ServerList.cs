@@ -38,6 +38,10 @@ namespace SAMP_Ex
 
         }
 
+        /// <summary>
+        /// Add a server to the server list
+        /// </summary>
+        /// <param name="server">A server instance</param>
         public void AddServer(Server server)
         {
             if (server.HasPassword)

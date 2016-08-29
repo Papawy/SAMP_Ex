@@ -210,6 +210,10 @@ namespace SAMP_Ex
             }
         }
 
+        /// <summary>
+        /// Update basic server informations (Name, number of players, mapname, etc.)
+        /// </summary>
+        /// <returns>True if update was success, false if not</returns>
         public bool UpdateInfos()
         {
             if(!SendOpcode('i'))
@@ -227,6 +231,10 @@ namespace SAMP_Ex
             }
         }
 
+        /// <summary>
+        /// Update rules of the server
+        /// </summary>
+        /// <returns>True if update was success, false if not</returns>
         public bool UpdateRules()
         {
             if (!SendOpcode('r'))
@@ -244,6 +252,10 @@ namespace SAMP_Ex
             }
         }
 
+        /// <summary>
+        /// Update player list of the server
+        /// </summary>
+        /// <returns>True if update was success, false if not</returns>
         public bool UpdatePlayerList()
         {
             if (!SendOpcode('c'))
@@ -261,6 +273,10 @@ namespace SAMP_Ex
             }
         }
 
+        /// <summary>
+        /// Update ping value
+        /// </summary>
+        /// <returns>True if update was success, false if not</returns>
         public bool UpdatePing()
         {
             if (!SendOpcode('p'))
@@ -278,6 +294,11 @@ namespace SAMP_Ex
             }
         }
 
+        /// <summary>
+        /// Get a specific rule value
+        /// </summary>
+        /// <param name="rule">rule name</param>
+        /// <returns>rule value</returns>
         public string GetRule(string rule)
         {
             if (_rules.ContainsKey(rule))
@@ -286,11 +307,19 @@ namespace SAMP_Ex
                 return String.Empty;
         }
 
+        /// <summary>
+        /// Get rules list
+        /// </summary>
+        /// <returns>A dictionary with rules name/value inside</returns>
         public Dictionary<string, string> GetRulesList()
         {
             return _rules;
         }
 
+        /// <summary>
+        /// Get players list
+        /// </summary>
+        /// <returns>A dictionary with players name/score inside</returns>
         public Dictionary<string, int> GetPlayersList()
         {
             return _players;

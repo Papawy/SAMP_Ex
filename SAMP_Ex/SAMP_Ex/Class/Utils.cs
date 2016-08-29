@@ -9,6 +9,11 @@ namespace SAMP_Ex
 {
     class Utils
     {
+        /// <summary>
+        /// Check if an IP address string is valid
+        /// </summary>
+        /// <param name="ipaddress"></param>
+        /// <returns>True if IP is valid, false if not</returns>
         public static bool IsValidIpAddress(string ipaddress)
         {
             IPAddress address;
@@ -28,6 +33,11 @@ namespace SAMP_Ex
                 return false;
         }
 
+        /// <summary>
+        /// Chekc if a port string is valid
+        /// </summary>
+        /// <param name="port"></param>
+        /// <returns>True if port if valid, false if not</returns>
         public static bool IsValidPort(string port)
         {
             int intPort;
@@ -42,6 +52,11 @@ namespace SAMP_Ex
                 return false;
         }
 
+        /// <summary>
+        /// Parse an IP address from an ip & port combined string address eg. "127.0.0.1:7777"
+        /// </summary>
+        /// <param name="ipport"></param>
+        /// <returns>IP from given string</returns>
         public static string ParseIPFromIPPort(string ipport)
         {
             try
@@ -54,6 +69,11 @@ namespace SAMP_Ex
             }
         }
 
+        /// <summary>
+        /// Parse a port from an ip & port combined string address eg. "127.0.0.1:7777"
+        /// </summary>
+        /// <param name="ipport"></param>
+        /// <returns>Port from given string</returns>
         public static string ParsePortFromIPPort(string ipport)
         {
             try

@@ -130,6 +130,10 @@ namespace SAMP_Ex
         }
         #endregion
 
+        /// <summary>
+        /// Get the GTA directory from the SAMP registry key
+        /// </summary>
+        /// <returns>GTA directory address</returns>
         public static string GetGTADir()
         {
             try
@@ -153,6 +157,11 @@ namespace SAMP_Ex
             }
         }
 
+        /// <summary>
+        /// Set the SAMP gta installation registry key to another location
+        /// </summary>
+        /// <param name="dir">New directory of the GTA installation</param>
+        /// <returns></returns>
         public static bool SetGTADir(string dir)
         {
             try
@@ -174,7 +183,18 @@ namespace SAMP_Ex
             }
         }
 
-        // It is a conversion of https://github.com/Whitetigerswt/samp_launcher main code in C#
+        // 
+        /// <summary>
+        /// Launch GTA program with SAMP injected inside with some parameters
+        /// 
+        /// It is a conversion of https://github.com/Whitetigerswt/samp_launcher main code in C#
+        /// </summary>
+        /// <param name="ip">Server IP</param>
+        /// <param name="port">Server port</param>
+        /// <param name="nickname">Player nickname</param>
+        /// <param name="password">Server password</param>
+        /// <param name="debug">Debug mode</param>
+        /// <returns>True if injection was successfull, false if not</returns>
         public static bool LaunchGTAInjected(string ip, string port, string nickname, string password = "", bool debug = false)
         {
 
