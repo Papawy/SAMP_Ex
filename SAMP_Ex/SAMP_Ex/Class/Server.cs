@@ -40,7 +40,7 @@ namespace SAMP_Ex
 
         #endregion
 
-        public Server(string ip, string port)
+        public Server(string address, string port)
         {
             IsValid = true;
 
@@ -59,12 +59,16 @@ namespace SAMP_Ex
 
             try
             {
-                Ip = Dns.GetHostAddresses(ip)[0];
+                Ip = Dns.GetHostAddresses(address)[0];
             }
             catch
             {
                 IsValid = false;
             }
+        }
+
+        public Server(string addressAndPort) : this(Utils.ParseIPFromIPPort(addressAndPort), Utils.ParsePortFromIPPort(addressAndPort))
+        {
         }
 
         private bool SendOpcode(char opcode)
@@ -208,6 +212,18 @@ namespace SAMP_Ex
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Update all server informations
+        /// </summary>
+        /// <returns>True if all updates were success, false if not</returns>
+        public bool TotalUpdate()
+        {
+            if ((UpdateInfos() && UpdatePing() && UpdatePlayerList() && UpdateRules()) == true)
+                return true;
+            else
+                return false;
         }
 
         /// <summary>

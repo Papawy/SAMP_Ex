@@ -53,7 +53,7 @@ namespace SAMP_Ex
         }
 
         /// <summary>
-        /// Parse an IP address from an ip & port combined string address eg. "127.0.0.1:7777"
+        /// Parse an IP address from an ip & port combined string address eg. "127.0.0.1:7777" or "mydomain.com:7777"
         /// </summary>
         /// <param name="ipport"></param>
         /// <returns>IP from given string</returns>
@@ -70,7 +70,7 @@ namespace SAMP_Ex
         }
 
         /// <summary>
-        /// Parse a port from an ip & port combined string address eg. "127.0.0.1:7777"
+        /// Parse a port from an ip & port combined string address eg. "127.0.0.1:7777" or "mydomain.com:7777"
         /// </summary>
         /// <param name="ipport"></param>
         /// <returns>Port from given string</returns>
