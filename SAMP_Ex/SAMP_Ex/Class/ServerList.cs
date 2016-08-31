@@ -12,20 +12,23 @@ namespace SAMP_Ex
     {
         public Image LockedImage { get; set; }
         public Image UnlockedImage { get; set; }
+        public Image LockHeaderImage { get; set; }
 
         public ServerList() : base()
         {
             this.RowHeadersVisible = false;
             this.AllowUserToAddRows = false;
             this.AllowUserToDeleteRows = false;
+            this.ReadOnly = true;
             this.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             System.Windows.Forms.DataGridViewImageColumn lockColumn = new System.Windows.Forms.DataGridViewImageColumn();
-            lockColumn.Image = LockedImage;
-
-            this.Columns.Add(lockColumn);
+            lockColumn.Image = LockHeaderImage;
             lockColumn.HeaderText = "Locked";
             lockColumn.Name = "locked";
+            lockColumn.ImageLayout = DataGridViewImageCellLayout.Stretch;
+
+            this.Columns.Add(lockColumn);
 
             this.Columns.Add("hostname", "Hostname");
             this.Columns.Add("players", "Players");
@@ -35,6 +38,11 @@ namespace SAMP_Ex
 
             this.Columns["locked"].Width = 20;
             this.Columns["locked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            this.Columns["locked"].Resizable = DataGridViewTriState.False;
+
+            this.Columns["hostname"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
+            this.CellPainting += ImageCellPainting;
 
         }
 
@@ -61,6 +69,17 @@ namespace SAMP_Ex
                 server.Ping.ToString(),
                 server.Gamemode,
                 server.Language);
+            }
+        }
+
+        private void ImageCellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.ColumnIndex == 0 && e.RowIndex == -1)
+            {
+                e.PaintBackground(e.ClipBounds, false);
+
+                e.Graphics.DrawImage(LockHeaderImage, e.CellBounds);
+                e.Handled = true;
             }
         }
     }
