@@ -6,13 +6,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 
+using System.Diagnostics;
+
 namespace SAMP_Ex
 {
     class ServerList : DataGridView
     {
+        protected System.Timers.Timer updateTimer;
+
+        protected List<Server> SourceList;
+
         public Image LockedImage { get; set; }
         public Image UnlockedImage { get; set; }
         public Image LockHeaderImage { get; set; }
+        
+        public int UpdateTimerInterval { get; set; }
 
         public ServerList() : base()
         {
@@ -28,21 +36,26 @@ namespace SAMP_Ex
             lockColumn.Name = "locked";
             lockColumn.ImageLayout = DataGridViewImageCellLayout.Stretch;
 
+
+            this.AutoGenerateColumns = true;
+
             this.Columns.Add(lockColumn);
 
-            this.Columns.Add("hostname", "Hostname");
+            /*this.Columns.Add("Hostname", "Hostname");
             this.Columns.Add("players", "Players");
             this.Columns.Add("ping", "Ping");
             this.Columns.Add("mode", "Mode");
-            this.Columns.Add("language", "Language");
+            this.Columns.Add("language", "Language");*/
 
             this.Columns["locked"].Width = 20;
             this.Columns["locked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             this.Columns["locked"].Resizable = DataGridViewTriState.False;
 
-            this.Columns["hostname"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-
             this.CellPainting += ImageCellPainting;
+            this.RowsAdded += ServerRowsAdded;
+            this.CellFormatting += ServerCellFormatting;
+
+            //updateTimer.Interval = UpdateTimerInterval;
 
         }
 
@@ -52,7 +65,8 @@ namespace SAMP_Ex
         /// <param name="server">A server instance</param>
         public void AddServer(Server server)
         {
-            if (server.HasPassword)
+            this.SourceList.Add(server);
+           /* if (server.HasPassword)
             {
                 this.Rows.Add(LockedImage,
                 server.Hostname,
@@ -69,10 +83,19 @@ namespace SAMP_Ex
                 server.Ping.ToString(),
                 server.Gamemode,
                 server.Language);
-            }
+            }*/
         }
 
-        private void ImageCellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        public void AddServerList(List<Server> serverList)
+        {
+            this.SourceList = serverList;
+            this.DataSource = serverList;
+            this.Columns["Hostname"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+        }
+
+        public Server GetSelectedServer() { return (Server)this.Rows[this.CurrentCell.RowIndex].DataBoundItem; }
+
+        protected void ImageCellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.ColumnIndex == 0 && e.RowIndex == -1)
             {
@@ -81,6 +104,47 @@ namespace SAMP_Ex
                 e.Graphics.DrawImage(LockHeaderImage, e.CellBounds);
                 e.Handled = true;
             }
+        }
+
+        protected void ServerRowsAdded(object sender, System.Windows.Forms.DataGridViewRowsAddedEventArgs e)
+        {
+            for (int index = e.RowIndex; index <= e.RowIndex + e.RowCount - 1; index++)
+            {
+                DataGridViewRow row = this.Rows[index];
+                Server servAdded = (Server)row.DataBoundItem;
+
+                if(servAdded.HasPassword)
+                {
+                    row.Cells["locked"].Value = LockedImage;
+                }
+                else
+                {
+                    row.Cells["locked"].Value = UnlockedImage;
+                }
+                foreach(DataGridViewCell cell in row.Cells)
+                {
+                    Debug.WriteLine(this.Columns[cell.ColumnIndex].Name.ToString());
+                }
+            }
+        }
+
+        protected void ServerCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if(this.Columns[e.ColumnIndex].Name == "Players")
+            {
+                Server servAdded = (Server)this.Rows[e.RowIndex].DataBoundItem;
+                e.Value = servAdded.Players + "/" + servAdded.MaxPlayers;
+            }
+        }
+
+        public void UpdateTimerTick(object sender, EventArgs e)
+        {
+            
+        }
+
+        public void StartUpdateTimer()
+        {
+            
         }
     }
 }

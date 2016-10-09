@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.ComponentModel;
+
+using System.Diagnostics;
 
 namespace SAMP_Ex
 {
@@ -22,12 +25,17 @@ namespace SAMP_Ex
         #endregion
 
         #region Accessors
+        [Browsable(false)]
         public IPAddress Ip { get; private set; }
+        [Browsable(false)]
         public string Port { get; private set; }
 
         public string Hostname { get; private set; }
+        [Browsable(false)]
         public bool HasPassword { get; private set; }
+        [Browsable(false)]
         public string Password { get; private set; }
+        [Browsable(false)]
         public int MaxPlayers { get; private set; }
         public int Players { get; private set; }
         public string MapName { get; private set; }
@@ -36,6 +44,7 @@ namespace SAMP_Ex
 
         public int Ping { get; private set; }
 
+        [Browsable(false)]
         public bool IsValid { get; private set; }
 
         #endregion
@@ -154,7 +163,7 @@ namespace SAMP_Ex
 
                                     int language = reader.ReadInt32();
                                     Language = new string(reader.ReadChars(language));
-
+                                    Debug.WriteLine("langue : "+Language);
                                     return true;
                                 }
                             case 'r':

@@ -214,4 +214,10 @@
   <data name="unlocked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icons\locked-1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="locked_colour" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\locked_colour.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="unlocked_colour" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\unlocked_colour.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

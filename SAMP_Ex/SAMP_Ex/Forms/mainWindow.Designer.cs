@@ -145,13 +145,31 @@
             this.dataGridViewTextBoxColumn53 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn54 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn55 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.grid_serverList = new SAMP_Ex.ServerList();
             this.dataGridViewImageColumn11 = new System.Windows.Forms.DataGridViewImageColumn();
             this.dataGridViewTextBoxColumn56 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn57 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn58 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn59 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn60 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewImageColumn12 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewTextBoxColumn61 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn62 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn63 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn64 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn65 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewImageColumn13 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewTextBoxColumn66 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn67 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn68 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn69 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn70 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.grid_serverList = new SAMP_Ex.ServerList();
+            this.dataGridViewImageColumn14 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewTextBoxColumn71 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn72 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn73 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn74 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn75 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip_main.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabCtrl_serversLists.SuspendLayout();
@@ -605,7 +623,6 @@
             // 
             // splitContainer_main
             // 
-            this.splitContainer_main.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer_main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer_main.Location = new System.Drawing.Point(0, 49);
             this.splitContainer_main.Name = "splitContainer_main";
@@ -618,12 +635,11 @@
             // 
             this.splitContainer_main.Panel2.Controls.Add(this.splitContainer_serverInfo);
             this.splitContainer_main.Size = new System.Drawing.Size(984, 355);
-            this.splitContainer_main.SplitterDistance = 569;
+            this.splitContainer_main.SplitterDistance = 700;
             this.splitContainer_main.TabIndex = 10;
             // 
             // splitContainer_serverInfo
             // 
-            this.splitContainer_serverInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer_serverInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer_serverInfo.Location = new System.Drawing.Point(0, 0);
             this.splitContainer_serverInfo.Name = "splitContainer_serverInfo";
@@ -636,7 +652,7 @@
             // splitContainer_serverInfo.Panel2
             // 
             this.splitContainer_serverInfo.Panel2.Controls.Add(this.grid_serverInfo);
-            this.splitContainer_serverInfo.Size = new System.Drawing.Size(411, 355);
+            this.splitContainer_serverInfo.Size = new System.Drawing.Size(280, 355);
             this.splitContainer_serverInfo.SplitterDistance = 141;
             this.splitContainer_serverInfo.TabIndex = 0;
             // 
@@ -646,7 +662,7 @@
             this.grid_playerList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grid_playerList.Location = new System.Drawing.Point(0, 0);
             this.grid_playerList.Name = "grid_playerList";
-            this.grid_playerList.Size = new System.Drawing.Size(409, 139);
+            this.grid_playerList.Size = new System.Drawing.Size(280, 141);
             this.grid_playerList.TabIndex = 0;
             // 
             // grid_serverInfo
@@ -655,7 +671,7 @@
             this.grid_serverInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grid_serverInfo.Location = new System.Drawing.Point(0, 0);
             this.grid_serverInfo.Name = "grid_serverInfo";
-            this.grid_serverInfo.Size = new System.Drawing.Size(409, 208);
+            this.grid_serverInfo.Size = new System.Drawing.Size(280, 210);
             this.grid_serverInfo.TabIndex = 0;
             // 
             // dataGridViewImageColumn1
@@ -983,27 +999,6 @@
             this.dataGridViewTextBoxColumn55.HeaderText = "Language";
             this.dataGridViewTextBoxColumn55.Name = "dataGridViewTextBoxColumn55";
             // 
-            // grid_serverList
-            // 
-            this.grid_serverList.AllowUserToAddRows = false;
-            this.grid_serverList.AllowUserToDeleteRows = false;
-            this.grid_serverList.AllowUserToResizeRows = false;
-            this.grid_serverList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.grid_serverList.BackgroundColor = System.Drawing.Color.White;
-            this.grid_serverList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid_serverList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grid_serverList.Location = new System.Drawing.Point(0, 0);
-            this.grid_serverList.LockedImage = global::SAMP_Ex.Properties.Resources.locked;
-            this.grid_serverList.MultiSelect = false;
-            this.grid_serverList.Name = "grid_serverList";
-            this.grid_serverList.RowHeadersVisible = false;
-            this.grid_serverList.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.grid_serverList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid_serverList.ShowEditingIcon = false;
-            this.grid_serverList.Size = new System.Drawing.Size(567, 353);
-            this.grid_serverList.TabIndex = 1;
-            this.grid_serverList.UnlockedImage = global::SAMP_Ex.Properties.Resources.unlocked;
-            // 
             // dataGridViewImageColumn11
             // 
             this.dataGridViewImageColumn11.HeaderText = "Locked";
@@ -1033,6 +1028,131 @@
             // 
             this.dataGridViewTextBoxColumn60.HeaderText = "Language";
             this.dataGridViewTextBoxColumn60.Name = "dataGridViewTextBoxColumn60";
+            // 
+            // dataGridViewImageColumn12
+            // 
+            this.dataGridViewImageColumn12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn12.HeaderText = "Locked";
+            this.dataGridViewImageColumn12.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.dataGridViewImageColumn12.Name = "dataGridViewImageColumn12";
+            this.dataGridViewImageColumn12.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewImageColumn12.Width = 20;
+            // 
+            // dataGridViewTextBoxColumn61
+            // 
+            this.dataGridViewTextBoxColumn61.HeaderText = "Hostname";
+            this.dataGridViewTextBoxColumn61.Name = "dataGridViewTextBoxColumn61";
+            // 
+            // dataGridViewTextBoxColumn62
+            // 
+            this.dataGridViewTextBoxColumn62.HeaderText = "Players";
+            this.dataGridViewTextBoxColumn62.Name = "dataGridViewTextBoxColumn62";
+            // 
+            // dataGridViewTextBoxColumn63
+            // 
+            this.dataGridViewTextBoxColumn63.HeaderText = "Ping";
+            this.dataGridViewTextBoxColumn63.Name = "dataGridViewTextBoxColumn63";
+            // 
+            // dataGridViewTextBoxColumn64
+            // 
+            this.dataGridViewTextBoxColumn64.HeaderText = "Mode";
+            this.dataGridViewTextBoxColumn64.Name = "dataGridViewTextBoxColumn64";
+            // 
+            // dataGridViewTextBoxColumn65
+            // 
+            this.dataGridViewTextBoxColumn65.HeaderText = "Language";
+            this.dataGridViewTextBoxColumn65.Name = "dataGridViewTextBoxColumn65";
+            // 
+            // dataGridViewImageColumn13
+            // 
+            this.dataGridViewImageColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn13.HeaderText = "Locked";
+            this.dataGridViewImageColumn13.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.dataGridViewImageColumn13.Name = "dataGridViewImageColumn13";
+            this.dataGridViewImageColumn13.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewImageColumn13.Width = 20;
+            // 
+            // dataGridViewTextBoxColumn66
+            // 
+            this.dataGridViewTextBoxColumn66.HeaderText = "Hostname";
+            this.dataGridViewTextBoxColumn66.Name = "dataGridViewTextBoxColumn66";
+            // 
+            // dataGridViewTextBoxColumn67
+            // 
+            this.dataGridViewTextBoxColumn67.HeaderText = "Players";
+            this.dataGridViewTextBoxColumn67.Name = "dataGridViewTextBoxColumn67";
+            // 
+            // dataGridViewTextBoxColumn68
+            // 
+            this.dataGridViewTextBoxColumn68.HeaderText = "Ping";
+            this.dataGridViewTextBoxColumn68.Name = "dataGridViewTextBoxColumn68";
+            // 
+            // dataGridViewTextBoxColumn69
+            // 
+            this.dataGridViewTextBoxColumn69.HeaderText = "Mode";
+            this.dataGridViewTextBoxColumn69.Name = "dataGridViewTextBoxColumn69";
+            // 
+            // dataGridViewTextBoxColumn70
+            // 
+            this.dataGridViewTextBoxColumn70.HeaderText = "Language";
+            this.dataGridViewTextBoxColumn70.Name = "dataGridViewTextBoxColumn70";
+            // 
+            // grid_serverList
+            // 
+            this.grid_serverList.AllowUserToAddRows = false;
+            this.grid_serverList.AllowUserToDeleteRows = false;
+            this.grid_serverList.AllowUserToResizeRows = false;
+            this.grid_serverList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.grid_serverList.BackgroundColor = System.Drawing.Color.White;
+            this.grid_serverList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grid_serverList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grid_serverList.Location = new System.Drawing.Point(0, 0);
+            this.grid_serverList.LockedImage = global::SAMP_Ex.Properties.Resources.locked_colour;
+            this.grid_serverList.LockHeaderImage = global::SAMP_Ex.Properties.Resources.locked;
+            this.grid_serverList.MultiSelect = false;
+            this.grid_serverList.Name = "grid_serverList";
+            this.grid_serverList.ReadOnly = true;
+            this.grid_serverList.RowHeadersVisible = false;
+            this.grid_serverList.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.grid_serverList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grid_serverList.ShowEditingIcon = false;
+            this.grid_serverList.Size = new System.Drawing.Size(700, 355);
+            this.grid_serverList.TabIndex = 1;
+            this.grid_serverList.UnlockedImage = global::SAMP_Ex.Properties.Resources.unlocked_colour;
+            // 
+            // dataGridViewImageColumn14
+            // 
+            this.dataGridViewImageColumn14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewImageColumn14.HeaderText = "Locked";
+            this.dataGridViewImageColumn14.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.dataGridViewImageColumn14.Name = "dataGridViewImageColumn14";
+            this.dataGridViewImageColumn14.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewImageColumn14.Width = 20;
+            // 
+            // dataGridViewTextBoxColumn71
+            // 
+            this.dataGridViewTextBoxColumn71.HeaderText = "Hostname";
+            this.dataGridViewTextBoxColumn71.Name = "dataGridViewTextBoxColumn71";
+            // 
+            // dataGridViewTextBoxColumn72
+            // 
+            this.dataGridViewTextBoxColumn72.HeaderText = "Players";
+            this.dataGridViewTextBoxColumn72.Name = "dataGridViewTextBoxColumn72";
+            // 
+            // dataGridViewTextBoxColumn73
+            // 
+            this.dataGridViewTextBoxColumn73.HeaderText = "Ping";
+            this.dataGridViewTextBoxColumn73.Name = "dataGridViewTextBoxColumn73";
+            // 
+            // dataGridViewTextBoxColumn74
+            // 
+            this.dataGridViewTextBoxColumn74.HeaderText = "Mode";
+            this.dataGridViewTextBoxColumn74.Name = "dataGridViewTextBoxColumn74";
+            // 
+            // dataGridViewTextBoxColumn75
+            // 
+            this.dataGridViewTextBoxColumn75.HeaderText = "Language";
+            this.dataGridViewTextBoxColumn75.Name = "dataGridViewTextBoxColumn75";
             // 
             // mainWindow
             // 
@@ -1199,6 +1319,24 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn58;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn59;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn60;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn61;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn62;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn63;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn64;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn65;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn66;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn67;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn68;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn69;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn70;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn71;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn72;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn73;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn74;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn75;
     }
 }
 

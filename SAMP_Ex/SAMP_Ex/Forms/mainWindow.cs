@@ -30,10 +30,17 @@ namespace SAMP_Ex
 
                 doc.Save(System.IO.Directory.GetCurrentDirectory() + @"\\config.xml");
             }
-
+            
             Server myServ = new Server("5.196.72.69", "7777");
+            Server myServ2 = new Server("serveur.gtrp.fr:3400");
 
-            if(myServ.UpdateInfos())
+            List<Server> servList = new List<Server>();
+            servList.Add(myServ);
+            servList.Add(myServ2);
+
+            grid_serverList.AddServerList(servList);
+
+            if (myServ.UpdateInfos())
             {
                 grpBox_serverInfos.Text = "Server info : " + myServ.Hostname;
             }
@@ -45,7 +52,10 @@ namespace SAMP_Ex
             myServ.UpdatePlayerList();
             myServ.UpdatePing();
 
+            myServ2.TotalUpdate();
+
             grid_serverList.AddServer(myServ);
+            grid_serverList.AddServer(myServ2);
 
         }
 
