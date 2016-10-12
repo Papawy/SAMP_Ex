@@ -80,6 +80,11 @@ namespace SAMP_Ex
         {
         }
 
+        public string GetVersion()
+        {
+            return this.GetRule("Version");
+        }
+
         private bool SendOpcode(char opcode)
         {
 

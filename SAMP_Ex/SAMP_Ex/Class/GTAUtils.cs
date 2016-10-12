@@ -131,6 +131,18 @@ namespace SAMP_Ex
         #endregion
 
         /// <summary>
+        /// DIrectly launch GTA SAMP and connect to a Server object.
+        /// </summary>
+        /// <param name="server">Servr object</param>
+        /// <param name="nickname">Player nickname</param>
+        /// <param name="debug">Debugmode</param>
+        /// <returns></returns>
+        public static bool ConnectClientTo(Server server, string nickname, bool debug=false)
+        {
+            return LaunchGTAInjected(server.Ip.ToString(), server.Port, nickname, server.Password, debug, @"\SAMP_Version\" + ConfigFile.GetSAMPDllPathForVersion(server.GetVersion()));
+        }
+
+        /// <summary>
         /// Get the GTA directory from the SAMP registry key
         /// </summary>
         /// <returns>GTA directory address</returns>
@@ -195,7 +207,7 @@ namespace SAMP_Ex
         /// <param name="password">Server password</param>
         /// <param name="debug">Debug mode</param>
         /// <returns>True if injection was successfull, false if not</returns>
-        public static bool LaunchGTAInjected(string ip, string port, string nickname, string password = "", bool debug = false)
+        public static bool LaunchGTAInjected(string ip, string port, string nickname, string password = "", bool debug = false, string sampdll = @"\samp.dll")
         {
 
             string gtaExeLocation = ConfigFile.GetUserConfig("gtapath") + @"\gta_sa.exe";
@@ -222,7 +234,7 @@ namespace SAMP_Ex
                 UIntPtr bWritten;
                 IntPtr hThread;
 
-                byte[] DLLName = new ASCIIEncoding().GetBytes(GetGTADir() + @"\samp.dll"); 
+                byte[] DLLName = new ASCIIEncoding().GetBytes(GetGTADir() + sampdll); 
                 Console.WriteLine(GetGTADir() + @"\samp.dll");
 
                 IntPtr hKernel = NativeMethods.LoadLibraryA("kernel32.dll"); 

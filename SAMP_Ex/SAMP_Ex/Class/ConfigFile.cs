@@ -66,7 +66,7 @@ namespace SAMP_Ex
             if (userConf != null)
                 return userConf.Value;
             else
-                return "";
+                return String.Empty;
         }
 
         /// <summary>
@@ -89,6 +89,17 @@ namespace SAMP_Ex
 		{
             return GetConfig("user", configName);
 		}
+
+        public bool IsSAMPDllVersionAvalaible(string sampvrs)
+        {
+            if (GetConfig("sampdll", sampvrs) == String.Empty) return false;
+            else return true;
+        }
+
+        public static string GetSAMPDllPathForVersion(string sampvrs)
+        {
+            return GetConfig("sampdll", sampvrs);
+        }
 
         /// <summary>
         /// Get file path
