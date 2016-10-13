@@ -47,12 +47,17 @@ namespace SAMP_Ex
         [Browsable(false)]
         public bool IsValid { get; private set; }
 
+        [Browsable(false)]
+        public string Nickname { get; set; }
+
         #endregion
 
-        public Server(string address, string port)
+        public Server(string address, string port, string nickname="")
         {
             _rules = new Dictionary<string, string>();
             _players = new Dictionary<string, int>();
+
+            Nickname = nickname;
 
             IsValid = true;
 
@@ -63,7 +68,6 @@ namespace SAMP_Ex
             }
             else
                 IsValid = false;
-
 
             _querySocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             _querySocket.SendTimeout = 3000;
@@ -79,7 +83,7 @@ namespace SAMP_Ex
             }
         }
 
-        public Server(string addressAndPort) : this(Utils.ParseIPFromIPPort(addressAndPort), Utils.ParsePortFromIPPort(addressAndPort))
+        public Server(string addressAndPort, string nickname="") : this(Utils.ParseIPFromIPPort(addressAndPort), Utils.ParsePortFromIPPort(addressAndPort), nickname)
         {
         }
 
@@ -125,33 +129,27 @@ namespace SAMP_Ex
                         return true;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.ToString());
                 return false;
             }
         }
 
-        private bool Receive()
+        protected void OnReceive(object sender, SocketAsyncEventArgs args)
         {
             try
-            {
-                EndPoint serverEndPoint = new IPEndPoint(Ip, _port);
-
-                //System.Threading.Thread.Sleep(1000);
-
-                byte[] buffer = new byte[3402];
-                _querySocket.ReceiveFrom(buffer, ref serverEndPoint);
-
-                using (MemoryStream receiveStream = new MemoryStream(buffer))
+            {                            
+                using (MemoryStream receiveStream = new MemoryStream(args.Buffer))
                 {
                     using (BinaryReader reader = new BinaryReader(receiveStream))
                     {
                         if (receiveStream.Length <= 10)
-                            return false;
+                            return;
 
                         reader.ReadBytes(10);
 
-                        switch(reader.ReadChar())
+                        switch (reader.ReadChar())
                         {
                             case 'i':
                                 {
@@ -161,7 +159,7 @@ namespace SAMP_Ex
                                     MaxPlayers = reader.ReadInt16();
 
                                     int hostnamelen = reader.ReadInt32();
-                                    Hostname = new string(reader.ReadChars(hostnamelen));
+                                    Hostname = new string(reader.ReadChars(hostnamelen));                                   
 
                                     int gamemodelen = reader.ReadInt32();
                                     Gamemode = new string(reader.ReadChars(gamemodelen));
@@ -171,7 +169,7 @@ namespace SAMP_Ex
 
                                     int language = reader.ReadInt32();
                                     Language = new string(reader.ReadChars(language));
-                                    return true;
+                                    return;
                                 }
                             case 'r':
                                 {
@@ -179,7 +177,7 @@ namespace SAMP_Ex
 
                                     int rulecount = reader.ReadInt16();
 
-                                    for(int i = 0; i<rulecount; i++)
+                                    for (int i = 0; i < rulecount; i++)
                                     {
                                         int rulelen = reader.ReadByte();
                                         string ruleName = new string(reader.ReadChars(rulelen));
@@ -190,7 +188,7 @@ namespace SAMP_Ex
                                         _rules.Add(ruleName, ruleValue);
                                     }
 
-                                    return true;
+                                    return;
                                 }
                             case 'c':
                                 {
@@ -208,26 +206,48 @@ namespace SAMP_Ex
                                         _players.Add(nickname, score);
                                     }
 
-                                    return true;
+                                    return;
                                 }
                             case 'p': // Ping
                                 {
                                     Ping = DateTime.Now.Subtract(_timestamp).Milliseconds;
 
-                                    return true;
+                                    return;
                                 }
                             default:
                                 {
-                                    return false;
+                                    return;
                                 }
                         }
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                Debug.WriteLine(ex.ToString());
+                return;
             }
+        }
+
+        private bool Receive()
+        {
+            try
+            {
+                var eventArgs = new SocketAsyncEventArgs();
+                eventArgs.Completed += OnReceive;
+                eventArgs.RemoteEndPoint = new IPEndPoint(Ip, _port);
+                eventArgs.SetBuffer(new byte[3402], 0, 3402);
+
+                if (!_querySocket.ReceiveFromAsync(eventArgs)) OnReceive(_querySocket, eventArgs);               
+
+                Debug.WriteLine(this.Hostname);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return true;
+            }
+            
         }
 
         /// <summary>
@@ -250,15 +270,24 @@ namespace SAMP_Ex
         {
             if(!SendOpcode('i'))
             {
+                if (String.IsNullOrWhiteSpace(this.Hostname))
+                    this.Hostname = "SAMP 0.3 Server";
+
                 return false;          
             }
 
             if(Receive())
             {
+                if (String.IsNullOrWhiteSpace(this.Hostname))
+                    this.Hostname = "SAMP 0.3 Server";
+
                 return true;
             }
             else
             {
+                if (String.IsNullOrWhiteSpace(this.Hostname))
+                    this.Hostname = "SAMP 0.3 Server";
+
                 return false;
             }
         }
