@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\FavFile.cs" />
     <Compile Include="Class\Server.cs" />
     <Compile Include="Class\ServerList.cs">
       <SubType>Component</SubType>
