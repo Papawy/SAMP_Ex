@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace SAMP_Ex
 {
@@ -83,6 +85,52 @@ namespace SAMP_Ex
             catch (IndexOutOfRangeException ex)
             {
                 return "";
+            }
+        }
+
+        public static bool CreateDefaultConfigFile(string path)
+        {
+            try
+            {
+                XDocument doc = new XDocument(
+                new XDeclaration("1.0", "utf-8", "yes"),
+                new XComment("Launcher configuration file"),
+                new XElement("configuration",
+                    new XElement("user",
+                        new XElement("defaultnick", ""),
+                        new XElement("gtapath", GTAUtils.GetGTADir()))),
+                new XElement("sampdll"));
+
+                doc.Save(path);
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }           
+        }
+
+        public static bool CreateDefaultFavList(string path)
+        {
+            try
+            {
+                XDocument doc = new XDocument(
+                new XDeclaration("1.0", "utf-8", "yes"),
+                new XComment("Favorites list"),
+                new XElement("favorites",
+                    new XElement("server",
+                        new XElement("ip", "127.0.0.1:7777"),
+                        new XElement("nickname", ""),
+                        new XElement("password", ""))));
+
+                doc.Save(path);
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }
