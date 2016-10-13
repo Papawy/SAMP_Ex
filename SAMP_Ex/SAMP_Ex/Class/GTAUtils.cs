@@ -139,7 +139,11 @@ namespace SAMP_Ex
         /// <returns></returns>
         public static bool ConnectClientTo(Server server, string nickname, bool debug=false)
         {
-            return LaunchGTAInjected(server.Ip.ToString(), server.Port, nickname, server.Password, debug, @"\SAMP_Version\" + ConfigFile.GetSAMPDllPathForVersion(server.GetVersion()));
+            if(ConfigFile.IsSAMPDllVersionAvalaible(server.GetVersion()))
+                return LaunchGTAInjected(server.Ip.ToString(), server.Port, nickname, server.Password, debug, @"\SAMP_Versions\" + ConfigFile.GetSAMPDllPathForVersion(server.GetVersion()) + ".dll");
+            else
+                return LaunchGTAInjected(server.Ip.ToString(), server.Port, nickname, server.Password, debug);
+
         }
 
         /// <summary>
@@ -235,7 +239,7 @@ namespace SAMP_Ex
                 IntPtr hThread;
 
                 byte[] DLLName = new ASCIIEncoding().GetBytes(GetGTADir() + sampdll); 
-                Console.WriteLine(GetGTADir() + @"\samp.dll");
+                Console.WriteLine(GetGTADir() + sampdll);
 
                 IntPtr hKernel = NativeMethods.LoadLibraryA("kernel32.dll"); 
                 UIntPtr LoadLib = NativeMethods.GetProcAddress(hKernel, "LoadLibraryA"); 

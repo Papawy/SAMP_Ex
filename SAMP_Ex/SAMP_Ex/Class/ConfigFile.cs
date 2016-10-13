@@ -90,7 +90,7 @@ namespace SAMP_Ex
             return GetConfig("user", configName);
 		}
 
-        public bool IsSAMPDllVersionAvalaible(string sampvrs)
+        public static bool IsSAMPDllVersionAvalaible(string sampvrs)
         {
             if (GetConfig("sampdll", sampvrs) == String.Empty) return false;
             else return true;
