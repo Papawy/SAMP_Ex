@@ -90,13 +90,23 @@ namespace SAMP_Ex
             return GetConfig("user", configName);
 		}
 
+        /// <summary>
+        /// Check if a SAMP Dll is present for a specified version
+        /// </summary>
+        /// <param name="sampvrs">samp version (ex : "0.3.7-R2")</param>
+        /// <returns>True if found, false if not</returns>
         public static bool IsSAMPDllVersionAvalaible(string sampvrs)
         {
             if (GetConfig("sampdll", sampvrs) == String.Empty) return false;
             else return true;
         }
 
-        public static string GetSAMPDllPathForVersion(string sampvrs)
+        /// <summary>
+        /// Return the SAMP Dll name for the specified version
+        /// </summary>
+        /// <param name="sampvrs">samp version (ex : "0.3.7-R2")</param>
+        /// <returns>SAMP Dll name</returns>
+        public static string GetSAMPDllNameForVersion(string sampvrs)
         {
             return GetConfig("sampdll", sampvrs);
         }
@@ -111,8 +121,6 @@ namespace SAMP_Ex
 		}
 
 		#region Attributes       
-		//private static Dictionary<string, string> m_userConfigs = new Dictionary<string, string>();
-		//private static string m_version;
 		private static string _filepath;
         private static XDocument _ConfigFile;
 		#endregion
