@@ -59,14 +59,20 @@ namespace SAMP_Ex
             if (!server.IsValid)
                 return false;
               
-            var serv = _FavFile.Root.Descendants("server").Where(x => x.Element("ip").Value == (server.Ip.ToString() + ":" + server.Port)).First();
-
-            if(serv != null)
+            try
             {
-                serv.Remove();
-                return true;
+                var serv = _FavFile.Root.Descendants("server").Where(x => x.Element("ip").Value == (server.Ip.ToString() + ":" + server.Port)).First();
+                if (serv != null)
+                {
+                    serv.Remove();
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception ex)
+            {
+                return false;
+            }           
         }
 
         public static List<Server> GetFavoritesList()
