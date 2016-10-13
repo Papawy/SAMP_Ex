@@ -51,6 +51,9 @@ namespace SAMP_Ex
 
         public Server(string address, string port)
         {
+            _rules = new Dictionary<string, string>();
+            _players = new Dictionary<string, int>();
+
             IsValid = true;
 
             if (Utils.IsValidPort(port))
@@ -168,7 +171,6 @@ namespace SAMP_Ex
 
                                     int language = reader.ReadInt32();
                                     Language = new string(reader.ReadChars(language));
-                                    Debug.WriteLine("langue : "+Language);
                                     return true;
                                 }
                             case 'r':
