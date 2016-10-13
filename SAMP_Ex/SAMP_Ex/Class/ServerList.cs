@@ -20,7 +20,7 @@ namespace SAMP_Ex
         public Image UnlockedImage { get; set; }
         public Image LockHeaderImage { get; set; }
         
-        public int UpdateTimerInterval { get; set; }
+        public double UpdateTimerInterval { get; set; }
 
         public ServerList() : base()
         {
@@ -29,15 +29,13 @@ namespace SAMP_Ex
             this.AllowUserToDeleteRows = false;
             this.ReadOnly = true;
             this.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            this.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
 
             System.Windows.Forms.DataGridViewImageColumn lockColumn = new System.Windows.Forms.DataGridViewImageColumn();
             lockColumn.Image = LockHeaderImage;
             lockColumn.HeaderText = "Locked";
             lockColumn.Name = "locked";
             lockColumn.ImageLayout = DataGridViewImageCellLayout.Stretch;
-
-
-            this.AutoGenerateColumns = true;
 
             this.Columns.Add(lockColumn);
 
@@ -51,11 +49,17 @@ namespace SAMP_Ex
             this.Columns["locked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             this.Columns["locked"].Resizable = DataGridViewTriState.False;
 
+            this.AutoGenerateColumns = true;
+
             this.CellPainting += ImageCellPainting;
             this.RowsAdded += ServerRowsAdded;
             this.CellFormatting += ServerCellFormatting;
+            this.DataBindingComplete += ApplyColumnStyle;
 
-            //updateTimer.Interval = UpdateTimerInterval;
+            updateTimer = new System.Timers.Timer();
+
+            updateTimer.Interval = 3000;            
+            updateTimer.Elapsed += this.UpdateTimerTick;
 
         }
 
@@ -90,7 +94,32 @@ namespace SAMP_Ex
         {
             this.SourceList = serverList;
             this.DataSource = serverList;
-            this.Columns["Hostname"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            this.UpdateAllServers();
+
+            foreach (DataGridViewColumn col in this.Columns)
+            {
+                if (col.Name != "locked")
+                    this.AutoResizeColumn(col.Index);
+            }
+        }
+
+        protected void ApplyColumnStyle(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            this.Columns["Hostname"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Columns["Players"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Columns["Gamemode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.Columns["MapName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.Columns["Language"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.Columns["Ping"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            foreach(DataGridViewColumn col in this.Columns)
+            {
+                if(col.Name != "locked")
+                    this.AutoResizeColumn(col.Index);
+            }
+            
+            this.Refresh();
+            this.Update();
         }
 
         public Server GetSelectedServer() { return (Server)this.Rows[this.CurrentCell.RowIndex].DataBoundItem; }
@@ -121,10 +150,6 @@ namespace SAMP_Ex
                 {
                     row.Cells["locked"].Value = UnlockedImage;
                 }
-                foreach(DataGridViewCell cell in row.Cells)
-                {
-                    Debug.WriteLine(this.Columns[cell.ColumnIndex].Name.ToString());
-                }
             }
         }
 
@@ -137,14 +162,40 @@ namespace SAMP_Ex
             }
         }
 
+        public void UpdateAllServers()
+        {
+            foreach (Server server in SourceList)
+            {
+                server.TotalUpdate();
+            }
+        }
+
         public void UpdateTimerTick(object sender, EventArgs e)
         {
+            this.UpdateAllServers();
+
+            MethodInvoker inv = delegate
+            {
+                this.Refresh();
+                this.Update();
+                foreach (DataGridViewColumn col in this.Columns)
+                {
+                    if (col.Name != "locked")
+                        this.AutoResizeColumn(col.Index);
+                }
+            };
+            this.Invoke(inv);
             
+        }
+
+        public void StopUpdateTimer()
+        {
+            updateTimer.Stop();
         }
 
         public void StartUpdateTimer()
         {
-            
+            updateTimer.Start();
         }
     }
 }
