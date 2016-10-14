@@ -61,12 +61,18 @@ namespace SAMP_Ex
         /// <returns>Configuration value as string</returns>
         public static string GetConfig(string subPart, string configName)
         {
-            var userConf = _ConfigFile.Descendants(subPart).Select(b => b.Element(configName)).FirstOrDefault();
-
-            if (userConf != null)
-                return userConf.Value;
-            else
+            try
+            {
+                var userConf = _ConfigFile.Descendants(subPart).Select(b => b.Element(configName)).FirstOrDefault();
+                if (userConf != null)
+                    return userConf.Value;
+                else
+                    return String.Empty;
+            }
+            catch (Exception ex)
+            {
                 return String.Empty;
+            }    
         }
 
         /// <summary>
@@ -97,7 +103,7 @@ namespace SAMP_Ex
         /// <returns>True if found, false if not</returns>
         public static bool IsSAMPDllVersionAvalaible(string sampvrs)
         {
-            if (GetConfig("sampdll", sampvrs) == String.Empty) return false;
+            if (GetConfig("sampdll", "v"+sampvrs) == String.Empty) return false;
             else return true;
         }
 
@@ -108,7 +114,7 @@ namespace SAMP_Ex
         /// <returns>SAMP Dll name</returns>
         public static string GetSAMPDllNameForVersion(string sampvrs)
         {
-            return GetConfig("sampdll", sampvrs);
+            return GetConfig("sampdll", "v"+sampvrs);
         }
 
         /// <summary>
