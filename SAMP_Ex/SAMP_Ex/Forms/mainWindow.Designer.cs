@@ -419,7 +419,7 @@
             this.toolStripBtn_connect.Name = "toolStripBtn_connect";
             this.toolStripBtn_connect.Size = new System.Drawing.Size(23, 22);
             this.toolStripBtn_connect.Text = "toolStripBtn_connect";
-            this.toolStripBtn_connect.ToolTipText = "Add server";
+            this.toolStripBtn_connect.ToolTipText = "Connect";
             this.toolStripBtn_connect.Click += new System.EventHandler(this.toolStripBtn_connect_Click);
             // 
             // toolStripSeparator5
@@ -436,7 +436,7 @@
             this.toolStripBtn_addServer.Name = "toolStripBtn_addServer";
             this.toolStripBtn_addServer.Size = new System.Drawing.Size(23, 22);
             this.toolStripBtn_addServer.Text = "toolStripBtn_addServer";
-            this.toolStripBtn_addServer.ToolTipText = "Connect";
+            this.toolStripBtn_addServer.ToolTipText = "Add server";
             this.toolStripBtn_addServer.Click += new System.EventHandler(this.toolStripBtn_addServer_Click);
             // 
             // toolStripBtn_deleteServer
