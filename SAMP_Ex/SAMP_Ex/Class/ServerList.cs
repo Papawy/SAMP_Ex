@@ -15,6 +15,7 @@ namespace SAMP_Ex
     class ServerList : DataGridView
     {
         protected System.Timers.Timer updateTimer;
+        protected System.Timers.Timer selectedServerTimer;
 
         protected BindingList<Server> SourceList;
 
@@ -23,6 +24,7 @@ namespace SAMP_Ex
         public Image LockHeaderImage { get; set; }
         
         public double UpdateTimerInterval { get; set; }
+        public double UpdateSelectedTimerInterval { get; set; }
 
         public ServerList() : base()
         {
@@ -53,11 +55,17 @@ namespace SAMP_Ex
             this.RowsAdded += ServerRowsAdded;
             this.CellFormatting += ServerCellFormatting;
             this.DataBindingComplete += ApplyColumnStyle;
+            this.SelectionChanged += this.UpdateSelectedServerTick;
 
             updateTimer = new System.Timers.Timer();
 
             updateTimer.Interval = 3000;            
             updateTimer.Elapsed += this.UpdateTimerTick;
+
+            selectedServerTimer = new System.Timers.Timer();
+
+            selectedServerTimer.Interval = 500;
+            selectedServerTimer.Elapsed += this.UpdateSelectedServerTick;
 
         }
 
@@ -145,6 +153,17 @@ namespace SAMP_Ex
             {
                 server.TotalUpdate();
             }
+        }
+
+        public void UpdateSelectedServerTick(object sender, EventArgs e)
+        {
+            this.GetSelectedServer().UpdatePing();
+            MethodInvoker inv = delegate
+            {
+                this.Refresh();
+                this.Update();
+            };
+            this.Invoke(inv);
         }
 
         public void UpdateTimerTick(object sender, EventArgs e)
