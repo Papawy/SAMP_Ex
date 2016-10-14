@@ -135,5 +135,14 @@ namespace SAMP_Ex
             addServerWindow addServerForm = new addServerWindow();
             addServerForm.Show();          
         }
+
+        private void toolStripBtn_deleteServer_Click(object sender, EventArgs e)
+        {
+            if (tabCtrl_serversLists.SelectedIndex == 0)
+            {
+                FavFile.DeleteServer(grid_serverList.GetSelectedServer());
+                FavFile.Save();
+            }              
+        }
     }
 }
