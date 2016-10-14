@@ -51,6 +51,7 @@
     <Compile Include="Class\ServerList.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Class\WebLists.cs" />
     <Compile Include="Forms\aboutWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,6 +60,12 @@
     </Compile>
     <Compile Include="Class\ConfigFile.cs" />
     <Compile Include="Class\GTAUtils.cs" />
+    <Compile Include="Forms\addServerWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\addServerWindow.Designer.cs">
+      <DependentUpon>addServerWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\mainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +89,9 @@
     <Compile Include="Class\Utils.cs" />
     <EmbeddedResource Include="Forms\aboutWindow.resx">
       <DependentUpon>aboutWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\addServerWindow.resx">
+      <DependentUpon>addServerWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\mainWindow.resx">
       <DependentUpon>mainWindow.cs</DependentUpon>

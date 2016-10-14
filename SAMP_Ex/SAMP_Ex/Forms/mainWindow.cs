@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Diagnostics;
+
 namespace SAMP_Ex
 {
     public partial class mainWindow : Form
@@ -18,46 +20,28 @@ namespace SAMP_Ex
             InitializeComponent();
             if(ConfigFile.Load("config.xml") == false)
             {
-                //System.IO.File.Create(System.IO.Directory.GetCurrentDirectory() + @"\\config.xml");
-
-                XDocument doc = new XDocument(
-                    new XDeclaration("1.0", "utf-8", "yes"),
-                    new XComment("Launcher configuration file"),
-                    new XElement("configuration",
-                        new XElement("user",
-                            new XElement("defaultnick", ""),
-                            new XElement("gtapath", GTAUtils.GetGTADir()))));
-
-                doc.Save(System.IO.Directory.GetCurrentDirectory() + @"\\config.xml");
+                Utils.CreateDefaultConfigFile(System.IO.Directory.GetCurrentDirectory() + @"\\config.xml");
             }
+            if (FavFile.Load("favlist.xml") == false)
+            {
+                Utils.CreateDefaultFavList(System.IO.Directory.GetCurrentDirectory() + @"\\favlist.xml");
+            }          
             
-            Server myServ = new Server("5.196.72.69", "7777");
-            Server myServ2 = new Server("serveur.gtrp.fr:3400");
+            Server myServ = new Server("s2.gta-multiplayer.cz:7777", ConfigFile.GetUserConfig("defaultnick"));
 
-            List<Server> servList = new List<Server>();
-            servList.Add(myServ);
-            servList.Add(myServ2);
+            grid_serverList.UpdateTimerInterval = 3000;
 
-            grid_serverList.AddServerList(servList);
+            WebLists.Load("http://monitor.sacnr.com/list/masterlist.txt", "http://monitor.sacnr.com/list/hostedlist.txt");
+            WebLists.UpdateHostedList();
+            WebLists.UpdateInternetList();
+            FavFile.GenerateFavList();
+            FavFile.UpdateFavList();
 
-            if (myServ.UpdateInfos())
-            {
-                grpBox_serverInfos.Text = "Server info : " + myServ.Hostname;
-            }
-            else
-            {
-                grpBox_serverInfos.Text = "Server info : " + "not found";
-            }
+            grid_serverList.AddServerList(FavFile.FavList);
 
-            myServ.UpdatePlayerList();
-            myServ.UpdatePing();
-
-            myServ2.TotalUpdate();
-
-            grid_serverList.AddServer(myServ);
-            grid_serverList.AddServer(myServ2);
-
+            grid_serverList.StartUpdateTimer();
         }
+
 
         private void InitializeServerGridView()
         {
@@ -100,6 +84,56 @@ namespace SAMP_Ex
         private void statusLbl_prayForGtaM_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("http://gtamaster.eu/");
+        }
+
+        private void mainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            grid_serverList.StopUpdateTimer();
+        }
+
+        private void toolStripBtn_connect_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine(grid_serverList.GetSelectedServer().GetVersion());
+            GTAUtils.ConnectClientTo(grid_serverList.GetSelectedServer(), false);
+        }
+
+        private void tabCtrl_serversLists_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var tabctrl = (TabControl)sender;
+
+            switch(tabctrl.SelectedIndex)
+            {
+                case 0:
+                    {
+                        grid_serverList.AddServerList(FavFile.FavList);
+                        break;
+                    }
+                case 1:
+                    {
+                        grid_serverList.AddServerList(WebLists.InternetList);
+                        break;
+                    }
+                case 2:
+                    {
+                        grid_serverList.AddServerList(WebLists.HostedList);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+        }
+
+        private void toolStripBtn_refreshServer_Click(object sender, EventArgs e)
+        {
+            grid_serverList.UpdateAllServers();
+        }
+
+        private void toolStripBtn_addServer_Click(object sender, EventArgs e)
+        {
+            addServerWindow addServerForm = new addServerWindow();
+            addServerForm.Show();          
         }
     }
 }
