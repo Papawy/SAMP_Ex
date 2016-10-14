@@ -7,6 +7,8 @@ using System.Net;
 using System.Xml;
 using System.Xml.Linq;
 
+using System.Diagnostics;
+
 namespace SAMP_Ex
 {
     class Utils
@@ -19,7 +21,17 @@ namespace SAMP_Ex
         public static bool IsValidIpAddress(string ipaddress)
         {
             IPAddress address;
-            if (IPAddress.TryParse(ipaddress, out address))
+            try
+            {
+                address = Dns.GetHostAddresses(ipaddress).First();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            
+            /*if (IPAddress.TryParse(ipaddress, out address))
             {
                 switch (address.AddressFamily)
                 {
@@ -31,8 +43,7 @@ namespace SAMP_Ex
                         return false;
                 }
             }
-            else
-                return false;
+                return false;*/
         }
 
         /// <summary>
