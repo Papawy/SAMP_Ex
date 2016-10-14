@@ -30,20 +30,6 @@ namespace SAMP_Ex
             {
                 return false;
             }
-            
-            /*if (IPAddress.TryParse(ipaddress, out address))
-            {
-                switch (address.AddressFamily)
-                {
-                    case System.Net.Sockets.AddressFamily.InterNetwork:
-                        return true;
-                    case System.Net.Sockets.AddressFamily.InterNetworkV6:
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-                return false;*/
         }
 
         /// <summary>

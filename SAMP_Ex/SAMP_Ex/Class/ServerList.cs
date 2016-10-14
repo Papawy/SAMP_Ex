@@ -43,12 +43,6 @@ namespace SAMP_Ex
 
             this.Columns.Add(lockColumn);
 
-            /*this.Columns.Add("Hostname", "Hostname");
-            this.Columns.Add("players", "Players");
-            this.Columns.Add("ping", "Ping");
-            this.Columns.Add("mode", "Mode");
-            this.Columns.Add("language", "Language");*/
-
             this.Columns["locked"].Width = 20;
             this.Columns["locked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             this.Columns["locked"].Resizable = DataGridViewTriState.False;
@@ -82,17 +76,7 @@ namespace SAMP_Ex
             this.SourceList = serverList;
             this.DataSource = serverList;
             this.Refresh();
-           // this.Update();
             this.UpdateAllServers();
-            /*
-            this.Columns["Hostname"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Columns["Players"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Columns["Gamemode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            this.Columns["MapName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            this.Columns["Language"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            this.Columns["Ping"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;*/
-
-            //this.DefaultCellStyle.Font = new Font("Lucida Sans Unicode", 8f, FontStyle.Regular, GraphicsUnit.Pixel, )
 
             foreach (DataGridViewColumn col in this.Columns)
             {
@@ -110,12 +94,6 @@ namespace SAMP_Ex
             this.Columns["MapName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.Columns["Language"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.Columns["Ping"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-
-           /* foreach(DataGridViewColumn col in this.Columns)
-            {
-                if(col.Name != "locked")
-                    this.AutoResizeColumn(col.Index);
-            }*/
 
             this.Refresh();
             this.Update();

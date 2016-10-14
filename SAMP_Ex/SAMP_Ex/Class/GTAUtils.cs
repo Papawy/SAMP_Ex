@@ -139,6 +139,7 @@ namespace SAMP_Ex
         /// <returns></returns>
         public static bool ConnectClientTo(Server server, string nickname, bool debug=false)
         {
+            Debug.WriteLine(@"\SAMP_Versions\" + ConfigFile.GetSAMPDllNameForVersion(server.GetVersion()) + ".dll");
             if(ConfigFile.IsSAMPDllVersionAvalaible(server.GetVersion()))
                 return LaunchGTAInjected(server.Ip.ToString(), server.Port, nickname, server.Password, debug, @"\SAMP_Versions\" + ConfigFile.GetSAMPDllNameForVersion(server.GetVersion()) + ".dll");
             else
