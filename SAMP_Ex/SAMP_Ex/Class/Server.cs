@@ -58,6 +58,7 @@ namespace SAMP_Ex
             _players = new Dictionary<string, int>();
 
             Nickname = nickname;
+            Password = "";
 
             IsValid = true;
 
@@ -67,11 +68,13 @@ namespace SAMP_Ex
                 Int32.TryParse(Port, out _port);
             }
             else
+            {
                 IsValid = false;
-
+            }
+                
             _querySocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            _querySocket.SendTimeout = 3000;
-            _querySocket.ReceiveTimeout = 3000;
+            _querySocket.SendTimeout = 1000;
+            _querySocket.ReceiveTimeout = 2000;
 
             try
             {
@@ -87,9 +90,14 @@ namespace SAMP_Ex
         {
         }
 
+        public void SetPassword(string password)
+        {
+            Password = password;
+        }
+
         public string GetVersion()
         {
-            return this.GetRule("Version");
+            return this.GetRule("version");
         }
 
         private bool SendOpcode(char opcode)
@@ -159,16 +167,16 @@ namespace SAMP_Ex
                                     MaxPlayers = reader.ReadInt16();
 
                                     int hostnamelen = reader.ReadInt32();
-                                    Hostname = new string(reader.ReadChars(hostnamelen));                                   
+                                    Hostname = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(hostnamelen));                                   
 
                                     int gamemodelen = reader.ReadInt32();
-                                    Gamemode = new string(reader.ReadChars(gamemodelen));
+                                    Gamemode = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(gamemodelen));
 
                                     int mapnamelen = reader.ReadInt32();
-                                    MapName = new string(reader.ReadChars(mapnamelen));
+                                    MapName = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(mapnamelen));
 
                                     int language = reader.ReadInt32();
-                                    Language = new string(reader.ReadChars(language));
+                                    Language = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(language));
                                     return;
                                 }
                             case 'r':
@@ -180,10 +188,10 @@ namespace SAMP_Ex
                                     for (int i = 0; i < rulecount; i++)
                                     {
                                         int rulelen = reader.ReadByte();
-                                        string ruleName = new string(reader.ReadChars(rulelen));
+                                        string ruleName = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(rulelen));
 
                                         int valuelen = reader.ReadByte();
-                                        string ruleValue = new string(reader.ReadChars(valuelen));
+                                        string ruleValue = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(valuelen));
 
                                         _rules.Add(ruleName, ruleValue);
                                     }
@@ -199,7 +207,7 @@ namespace SAMP_Ex
                                     for (int i = 0; i < playercount; i++)
                                     {
                                         int namelen = reader.ReadByte();
-                                        string nickname = new string(reader.ReadChars(namelen));
+                                        string nickname = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(namelen));
 
                                         int score = reader.ReadInt32();
 
@@ -240,7 +248,6 @@ namespace SAMP_Ex
 
                 if (!_querySocket.ReceiveFromAsync(eventArgs)) OnReceive(_querySocket, eventArgs);               
 
-                Debug.WriteLine(this.Hostname);
                 return true;
             }
             catch (Exception ex)
