@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.ComponentModel;
+
 
 using System.Diagnostics;
 
@@ -14,7 +16,7 @@ namespace SAMP_Ex
     {
         protected System.Timers.Timer updateTimer;
 
-        protected List<Server> SourceList;
+        protected BindingList<Server> SourceList;
 
         public Image LockedImage { get; set; }
         public Image UnlockedImage { get; set; }
@@ -30,6 +32,8 @@ namespace SAMP_Ex
             this.ReadOnly = true;
             this.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             this.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            this.ScrollBars = ScrollBars.Vertical;
+            this.DoubleBuffered = true;
 
             System.Windows.Forms.DataGridViewImageColumn lockColumn = new System.Windows.Forms.DataGridViewImageColumn();
             lockColumn.Image = LockHeaderImage;
@@ -70,37 +74,32 @@ namespace SAMP_Ex
         public void AddServer(Server server)
         {
             this.SourceList.Add(server);
-           /* if (server.HasPassword)
-            {
-                this.Rows.Add(LockedImage,
-                server.Hostname,
-                server.Players + "/" + server.MaxPlayers,
-                server.Ping.ToString(),
-                server.Gamemode,
-                server.Language);
-            }
-            else
-            {
-                this.Rows.Add(UnlockedImage,
-                server.Hostname,
-                server.Players + "/" + server.MaxPlayers,
-                server.Ping.ToString(),
-                server.Gamemode,
-                server.Language);
-            }*/
+
         }
 
-        public void AddServerList(List<Server> serverList)
+        public void AddServerList(BindingList<Server> serverList)
         {
             this.SourceList = serverList;
             this.DataSource = serverList;
+            this.Refresh();
+           // this.Update();
             this.UpdateAllServers();
+            /*
+            this.Columns["Hostname"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Columns["Players"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Columns["Gamemode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.Columns["MapName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            this.Columns["Language"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            this.Columns["Ping"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;*/
+
+            //this.DefaultCellStyle.Font = new Font("Lucida Sans Unicode", 8f, FontStyle.Regular, GraphicsUnit.Pixel, )
 
             foreach (DataGridViewColumn col in this.Columns)
             {
                 if (col.Name != "locked")
                     this.AutoResizeColumn(col.Index);
             }
+            
         }
 
         protected void ApplyColumnStyle(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -110,14 +109,14 @@ namespace SAMP_Ex
             this.Columns["Gamemode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.Columns["MapName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.Columns["Language"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            this.Columns["Ping"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.Columns["Ping"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
-            foreach(DataGridViewColumn col in this.Columns)
+           /* foreach(DataGridViewColumn col in this.Columns)
             {
                 if(col.Name != "locked")
                     this.AutoResizeColumn(col.Index);
-            }
-            
+            }*/
+
             this.Refresh();
             this.Update();
         }

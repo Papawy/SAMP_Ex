@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using System.ComponentModel;
+
 
 using System.Diagnostics;
 
@@ -18,6 +20,7 @@ namespace SAMP_Ex
             {
                 _FavFile = XDocument.Load(file);
                 _filepath = file;
+                GenerateFavList();
                 return true;
             }
             catch (Exception e)
@@ -31,27 +34,42 @@ namespace SAMP_Ex
             _FavFile.Save(_filepath);
         }
 
+        public static void UpdateFavList()
+        {
+            foreach(Server serv in FavList)
+            {
+                serv.TotalUpdate();
+            }
+        }
+
         public static bool AddServer(Server server, string nickname)
         {
             if (!server.IsValid)
-                return false;
+            { return false; }
 
-            var servip = _FavFile.Root.Descendants("server").Where(x => x.Element("ip").Value == (server.Ip.ToString()+":"+server.Port));
-           
-
-            if (nickname == String.Empty)
-                nickname = ConfigFile.GetUserConfig("defaultnick");
-
-            if (servip == null)
+            try
             {
-                _FavFile.Element("favorites").Add(                   
-                    new XElement("server",
-                            new XElement("ip", server.Ip.ToString() + ":" + server.Port), 
-                            new XElement("nickname", nickname),
-                            new XElement("password", server.Password)));
-                return true;
+                var servip = _FavFile.Root.Descendants("server").Where(x => x.Element("ip").Value == (server.Ip.ToString() + ":" + server.Port)).FirstOrDefault();
+
+
+                if (nickname == String.Empty)
+                    nickname = ConfigFile.GetUserConfig("defaultnick");
+
+                if (servip == null)
+                {
+                    _FavFile.Element("favorites").Add(
+                        new XElement("server",
+                                new XElement("ip", server.Ip.ToString() + ":" + server.Port),
+                                new XElement("nickname", nickname),
+                                new XElement("password", server.Password)));
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public static bool DeleteServer(Server server)
@@ -75,31 +93,39 @@ namespace SAMP_Ex
             }           
         }
 
-        public static List<Server> GetFavoritesList()
+        public static bool GenerateFavList()
         {
+            if (FavList == null)
+            {
+                FavList = new BindingList<Server>();
+                FavList.RaiseListChangedEvents = true;
+            }
+                
+            FavList.Clear();
+            
             try
             {
-                List<Server> tmpList = new List<Server>();
                 foreach (XElement xel in _FavFile.Root.Descendants("server"))
                 {
                     try
                     {
-                        tmpList.Add(new Server(xel.Element("ip").Value, xel.Element("nickname").Value));
+                        FavList.Add(new Server(xel.Element("ip").Value, xel.Element("nickname").Value));
                     }
                     catch (Exception ex) { }
-                      
+
                 }
-                return tmpList;
+                return true;
             }
             catch (Exception ex)
             {
-                return new List<Server>();
+                return false;
             }
         }
 
         #region Attributes       
         private static string _filepath;
         private static XDocument _FavFile;
+        public static BindingList<Server> FavList;
         #endregion
     }
 }
