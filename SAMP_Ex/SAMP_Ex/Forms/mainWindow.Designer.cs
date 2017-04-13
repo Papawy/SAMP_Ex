@@ -79,6 +79,7 @@
             this.grpBox_filters = new System.Windows.Forms.GroupBox();
             this.tableLayout_filterAndServerInfo = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer_main = new System.Windows.Forms.SplitContainer();
+            this.grid_serverList = new SAMP_Ex.ServerList();
             this.splitContainer_serverInfo = new System.Windows.Forms.SplitContainer();
             this.grid_playerList = new System.Windows.Forms.DataGridView();
             this.grid_serverInfo = new System.Windows.Forms.DataGridView();
@@ -89,7 +90,10 @@
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.grid_serverList = new SAMP_Ex.ServerList();
+            this.toolStripTxtBox_nickname = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLbl_name = new System.Windows.Forms.ToolStripLabel();
+            this.chckBox_useNicknameDefault = new System.Windows.Forms.CheckBox();
             this.menuStrip_main.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabCtrl_serversLists.SuspendLayout();
@@ -99,13 +103,13 @@
             this.splitContainer_main.Panel1.SuspendLayout();
             this.splitContainer_main.Panel2.SuspendLayout();
             this.splitContainer_main.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grid_serverList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_serverInfo)).BeginInit();
             this.splitContainer_serverInfo.Panel1.SuspendLayout();
             this.splitContainer_serverInfo.Panel2.SuspendLayout();
             this.splitContainer_serverInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid_playerList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid_serverInfo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grid_serverList)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip_main
@@ -382,7 +386,10 @@
             this.toolStripBtn_settings,
             this.toolStripSeparator7,
             this.toolStripBtn_sampSite,
-            this.toolStripBtn_about});
+            this.toolStripBtn_about,
+            this.toolStripSeparator9,
+            this.toolStripLbl_name,
+            this.toolStripTxtBox_nickname});
             this.toolStrip_quickBtn.Location = new System.Drawing.Point(0, 24);
             this.toolStrip_quickBtn.Name = "toolStrip_quickBtn";
             this.toolStrip_quickBtn.Size = new System.Drawing.Size(1284, 25);
@@ -563,6 +570,41 @@
             this.splitContainer_main.SplitterDistance = 1017;
             this.splitContainer_main.TabIndex = 10;
             // 
+            // grid_serverList
+            // 
+            this.grid_serverList.AllowUserToAddRows = false;
+            this.grid_serverList.AllowUserToDeleteRows = false;
+            this.grid_serverList.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.grid_serverList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.grid_serverList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.grid_serverList.BackgroundColor = System.Drawing.Color.White;
+            this.grid_serverList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grid_serverList.DefaultCellStyle = dataGridViewCellStyle2;
+            this.grid_serverList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grid_serverList.Location = new System.Drawing.Point(0, 0);
+            this.grid_serverList.LockedImage = global::SAMP_Ex.Properties.Resources.locked_colour;
+            this.grid_serverList.LockHeaderImage = global::SAMP_Ex.Properties.Resources.locked;
+            this.grid_serverList.MultiSelect = false;
+            this.grid_serverList.Name = "grid_serverList";
+            this.grid_serverList.ReadOnly = true;
+            this.grid_serverList.RowHeadersVisible = false;
+            this.grid_serverList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.grid_serverList.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.grid_serverList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grid_serverList.ShowEditingIcon = false;
+            this.grid_serverList.Size = new System.Drawing.Size(1017, 455);
+            this.grid_serverList.TabIndex = 1;
+            this.grid_serverList.UnlockedImage = global::SAMP_Ex.Properties.Resources.unlocked_colour;
+            this.grid_serverList.UpdateTimerInterval = 0D;
+            // 
             // splitContainer_serverInfo
             // 
             this.splitContainer_serverInfo.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -634,46 +676,41 @@
             this.dataGridViewTextBoxColumn6.HeaderText = "Language";
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             // 
-            // grid_serverList
+            // toolStripTxtBox_nickname
             // 
-            this.grid_serverList.AllowUserToAddRows = false;
-            this.grid_serverList.AllowUserToDeleteRows = false;
-            this.grid_serverList.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.grid_serverList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.grid_serverList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.grid_serverList.BackgroundColor = System.Drawing.Color.White;
-            this.grid_serverList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.grid_serverList.DefaultCellStyle = dataGridViewCellStyle2;
-            this.grid_serverList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grid_serverList.Location = new System.Drawing.Point(0, 0);
-            this.grid_serverList.LockedImage = global::SAMP_Ex.Properties.Resources.locked_colour;
-            this.grid_serverList.LockHeaderImage = global::SAMP_Ex.Properties.Resources.locked;
-            this.grid_serverList.MultiSelect = false;
-            this.grid_serverList.Name = "grid_serverList";
-            this.grid_serverList.ReadOnly = true;
-            this.grid_serverList.RowHeadersVisible = false;
-            this.grid_serverList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.grid_serverList.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.grid_serverList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid_serverList.ShowEditingIcon = false;
-            this.grid_serverList.Size = new System.Drawing.Size(1017, 455);
-            this.grid_serverList.TabIndex = 1;
-            this.grid_serverList.UnlockedImage = global::SAMP_Ex.Properties.Resources.unlocked_colour;
-            this.grid_serverList.UpdateTimerInterval = 0D;
+            this.toolStripTxtBox_nickname.Name = "toolStripTxtBox_nickname";
+            this.toolStripTxtBox_nickname.Size = new System.Drawing.Size(150, 25);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLbl_name
+            // 
+            this.toolStripLbl_name.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStripLbl_name.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripLbl_name.Name = "toolStripLbl_name";
+            this.toolStripLbl_name.Size = new System.Drawing.Size(61, 22);
+            this.toolStripLbl_name.Text = "Nickname";
+            // 
+            // chckBox_useNicknameDefault
+            // 
+            this.chckBox_useNicknameDefault.AutoSize = true;
+            this.chckBox_useNicknameDefault.BackColor = System.Drawing.SystemColors.Control;
+            this.chckBox_useNicknameDefault.Location = new System.Drawing.Point(468, 27);
+            this.chckBox_useNicknameDefault.Name = "chckBox_useNicknameDefault";
+            this.chckBox_useNicknameDefault.Size = new System.Drawing.Size(102, 17);
+            this.chckBox_useNicknameDefault.TabIndex = 11;
+            this.chckBox_useNicknameDefault.Text = "Use it by default";
+            this.chckBox_useNicknameDefault.UseVisualStyleBackColor = false;
             // 
             // mainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1284, 661);
+            this.Controls.Add(this.chckBox_useNicknameDefault);
             this.Controls.Add(this.splitContainer_main);
             this.Controls.Add(this.tableLayout_filterAndServerInfo);
             this.Controls.Add(this.toolStrip_quickBtn);
@@ -699,13 +736,13 @@
             this.splitContainer_main.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_main)).EndInit();
             this.splitContainer_main.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grid_serverList)).EndInit();
             this.splitContainer_serverInfo.Panel1.ResumeLayout(false);
             this.splitContainer_serverInfo.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_serverInfo)).EndInit();
             this.splitContainer_serverInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grid_playerList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid_serverInfo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grid_serverList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -771,6 +808,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripLabel toolStripLbl_name;
+        private System.Windows.Forms.ToolStripTextBox toolStripTxtBox_nickname;
+        private System.Windows.Forms.CheckBox chckBox_useNicknameDefault;
     }
 }
 

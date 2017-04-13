@@ -34,14 +34,6 @@ namespace SAMP_Ex
             _FavFile.Save(_filepath);
         }
 
-        public static void UpdateFavList()
-        {
-            foreach(Server serv in FavList)
-            {
-                serv.TotalUpdate();
-            }
-        }
-
         public static bool AddServer(Server server, string nickname)
         {
             try
@@ -106,14 +98,13 @@ namespace SAMP_Ex
                     {
                         FavList.Add(new Server(xel.Element("ip").Value, xel.Element("nickname").Value));
                     }
-                    catch (Exception ex) { }
+                    finally { }
 
                 }
                 return true;
             }
-            catch (Exception ex)
-            {
-                return false;
+            finally
+            { 
             }
         }
 

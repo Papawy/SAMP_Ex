@@ -25,22 +25,6 @@ namespace SAMP_Ex
             }
         }
 
-        public static void UpdateInternetList()
-        {
-            foreach (Server serv in InternetList)
-            {
-                serv.TotalUpdate();
-            }
-        }
-
-        public static void UpdateHostedList()
-        {
-            foreach (Server serv in HostedList)
-            {
-                serv.TotalUpdate();
-            }
-        }
-
         public static bool GenerateInternetList(string website)
         {
             if(InternetList == null)

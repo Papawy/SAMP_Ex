@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,19 +10,25 @@ using System.Net.Sockets;
 using System.ComponentModel;
 
 using System.Diagnostics;
+using System.Threading;
 
 namespace SAMP_Ex
 {
     class Server
     {
         #region Property
-        private Dictionary<string, string> _rules;
-        private Dictionary<string, int> _players;
+        private ConcurrentDictionary<string, string> _rules;
+        private ConcurrentDictionary<string, int> _players;
 
         private int _port;
 
         private DateTime _timestamp;
+		private IPEndPoint _endPoint;
         private Socket _querySocket;
+
+		private ManualResetEvent _receptionComplete;
+
+        private byte[] _buffer;
         #endregion
 
         #region Accessors
@@ -54,8 +61,9 @@ namespace SAMP_Ex
 
         public Server(string address, string port, string nickname="")
         {
-            _rules = new Dictionary<string, string>();
-            _players = new Dictionary<string, int>();
+            _rules = new ConcurrentDictionary<string, string>();
+            _players = new ConcurrentDictionary<string, int>();
+            _buffer = new byte[3402];
 
             Nickname = nickname;
             Password = "";
@@ -71,19 +79,26 @@ namespace SAMP_Ex
             {
                 IsValid = false;
             }
-                
-            _querySocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            _querySocket.SendTimeout = 1000;
-            _querySocket.ReceiveTimeout = 2000;
 
-            try
+            _querySocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+			_querySocket.SendTimeout = 1000;
+            _querySocket.ReceiveTimeout = 500;
+			_querySocket.Blocking = true;
+
+			_receptionComplete = new ManualResetEvent(false);
+
+			try
             {
                 Ip = Dns.GetHostAddresses(address)[0];
-            }
+				_endPoint = new IPEndPoint(Ip, _port);
+			}
             catch
             {
-                IsValid = false;
+				IsValid = false;
+				throw new Exception("Invalid IP");
             }
+
+
         }
 
         public Server(string addressAndPort, string nickname="") : this(Utils.ParseIPFromIPPort(addressAndPort), Utils.ParsePortFromIPPort(addressAndPort), nickname)
@@ -106,9 +121,9 @@ namespace SAMP_Ex
             // from https://wiki.sa-mp.com/wiki/Query_Mechanism/Csharp
             try
             {
-                EndPoint serverEndPoint = new IPEndPoint(Ip, _port);
+				_buffer = new byte[3402];
 
-                using (MemoryStream stream = new MemoryStream())
+				using (MemoryStream stream = new MemoryStream())
                 {
                     using (BinaryWriter writer = new BinaryWriter(stream))
                     {
@@ -131,7 +146,7 @@ namespace SAMP_Ex
                         _timestamp = DateTime.Now;
                     }
 
-                    if (!(_querySocket.SendTo(stream.ToArray(), serverEndPoint) > 0))
+                    if (!(_querySocket.SendTo(stream.ToArray(), _endPoint) > 0))
                         return false;
                     else
                         return true;
@@ -144,115 +159,185 @@ namespace SAMP_Ex
             }
         }
 
-        protected void OnReceive(object sender, SocketAsyncEventArgs args)
-        {
-            try
-            {                            
-                using (MemoryStream receiveStream = new MemoryStream(args.Buffer))
-                {
-                    using (BinaryReader reader = new BinaryReader(receiveStream))
-                    {
-                        if (receiveStream.Length <= 10)
-                            return;
+		protected void ParseReceivedBytes(byte[] buffer)
+		{
+			try
+			{
+				using (MemoryStream receiveStream = new MemoryStream(buffer))
+				{
+					using (BinaryReader reader = new BinaryReader(receiveStream))
+					{
+						if (receiveStream.Length <= 10)
+						{
+							reader.Dispose();
+							receiveStream.Dispose();
+							return;
+						}
 
-                        reader.ReadBytes(10);
+						reader.ReadBytes(10);
 
-                        switch (reader.ReadChar())
-                        {
-                            case 'i':
-                                {
-                                    HasPassword = Convert.ToBoolean((reader.ReadByte()));
+						switch (reader.ReadChar())
+						{
+							case 'i':
+								{
+									HasPassword = Convert.ToBoolean((reader.ReadByte()));
 
-                                    Players = reader.ReadInt16();
-                                    MaxPlayers = reader.ReadInt16();
+									Players = reader.ReadInt16();
+									MaxPlayers = reader.ReadInt16();
 
-                                    int hostnamelen = reader.ReadInt32();
-                                    Hostname = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(hostnamelen));                                   
+									int hostnamelen = reader.ReadInt32();
+									Hostname = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(hostnamelen));
 
-                                    int gamemodelen = reader.ReadInt32();
-                                    Gamemode = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(gamemodelen));
+									int gamemodelen = reader.ReadInt32();
+									Gamemode = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(gamemodelen));
 
-                                    int mapnamelen = reader.ReadInt32();
-                                    MapName = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(mapnamelen));
+									int mapnamelen = reader.ReadInt32();
+									MapName = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(mapnamelen));
 
-                                    int language = reader.ReadInt32();
-                                    Language = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(language));
-                                    return;
-                                }
-                            case 'r':
-                                {
-                                    _rules.Clear();
+									if (reader.BaseStream.Position != reader.BaseStream.Length)
+									{
+										if (this.GetVersion() == "0.3.7" || this.GetVersion() == "0.3.7-R2" || this.GetVersion() == "0.3.7-R1")
+										{
+											int language = reader.ReadInt32();
+											Language = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(language));
+										}
+									}
+									break;
+								}
+							case 'r':
+								{
+									_rules.Clear();
 
-                                    int rulecount = reader.ReadInt16();
+									int rulecount = reader.ReadInt16();
+									int rulelen = 0;
+									int valuelen = 0;
 
-                                    for (int i = 0; i < rulecount; i++)
-                                    {
-                                        int rulelen = reader.ReadByte();
-                                        string ruleName = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(rulelen));
+									for (int i = 0; i < rulecount; i++)
+									{
+										rulelen = reader.ReadByte();
+										string ruleName = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(rulelen));
 
-                                        int valuelen = reader.ReadByte();
-                                        string ruleValue = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(valuelen));
+										valuelen = reader.ReadByte();
+										string ruleValue = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(valuelen));
 
-                                        _rules.Add(ruleName, ruleValue);
-                                    }
 
-                                    return;
-                                }
-                            case 'c':
-                                {
-                                    _players.Clear();
+										if (!_rules.ContainsKey(ruleName))
+											_rules.AddOrUpdate(ruleName, ruleValue, (key, val) => val);
+										else
+											_rules[ruleName] = ruleValue;
+									}
+									break;
+								}
+							case 'c':
+								{
+									_players.Clear();
 
-                                    int playercount = reader.ReadInt16();
+									int playercount = reader.ReadInt16();
+									if (playercount == 0)
+									{
+										break;
+									}
 
-                                    for (int i = 0; i < playercount; i++)
-                                    {
-                                        int namelen = reader.ReadByte();
-                                        string nickname = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(namelen));
+									for (int i = 0; i < playercount; i++)
+									{
+										try
+										{
+											int namelen = 0;
+											int score = 0;
+											if (reader.BaseStream.Position != reader.BaseStream.Length)
+											{
+												namelen = reader.ReadByte();
+											}
+											else
+											{
+												break;
+											}
 
-                                        int score = reader.ReadInt32();
+											string nickname = System.Text.Encoding.UTF7.GetString(reader.ReadBytes(namelen));
 
-                                        _players.Add(nickname, score);
-                                    }
+											if (reader.BaseStream.Position + 4 != reader.BaseStream.Length)
+											{
+												try
+												{
+													//Debug.WriteLine(reader.BaseStream.Position + " : " + reader.BaseStream.Length);
+													//score = reader.ReadInt32();
+												}
+												catch (EndOfStreamException ex) { Debug.WriteLine(ex.Data); score = 0; }
 
-                                    return;
-                                }
-                            case 'p': // Ping
-                                {
-                                    Ping = DateTime.Now.Subtract(_timestamp).Milliseconds;
+											}
+											else
+											{
+												break;
+											}
 
-                                    return;
-                                }
-                            default:
-                                {
-                                    return;
-                                }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-                return;
-            }
-        }
+											if (!String.IsNullOrEmpty(nickname))
+											{
+												if (!_players.ContainsKey(nickname))
+													_players.AddOrUpdate(nickname, score, (key, val) => val);
+												else
+													_players[nickname] = score;
+											}
+										}
+										catch (Exception ex)
+										{
+											Debug.WriteLine(ex.ToString());
+										}
+
+									}
+
+									break;
+								}
+							case 'p': // Ping
+								{
+									Ping = DateTime.Now.Subtract(_timestamp).Milliseconds;
+
+									break;
+								}
+							default:
+								{
+									break;
+								}
+						}
+						reader.Dispose();
+						receiveStream.Dispose();
+						_buffer = null;
+						return;
+					}
+				}
+			}
+			catch(Exception ex)
+			{
+				Debug.WriteLine(ex.ToString());
+			}
+		}
 
         private bool Receive()
         {
             try
             {
-                var eventArgs = new SocketAsyncEventArgs();
-                eventArgs.Completed += OnReceive;
-                eventArgs.RemoteEndPoint = new IPEndPoint(Ip, _port);
-                eventArgs.SetBuffer(new byte[3402], 0, 3402);
-
-                if (!_querySocket.ReceiveFromAsync(eventArgs)) OnReceive(_querySocket, eventArgs);               
-
-                return true;
+				_buffer = new byte[3402];
+				_querySocket.Receive(_buffer);
+				if (_buffer != null)
+				{
+					try
+					{
+						ParseReceivedBytes(_buffer);
+						return true;
+					}
+					catch (Exception ex)
+					{
+						Debug.WriteLine("Except : " + ex.ToString());
+						return false;
+					}
+				}
+				else return false;
+					
+				
             }
             catch (Exception ex)
             {
-                return true;
+                Debug.WriteLine("Except : " + ex.ToString());
+				return false;
             }
             
         }
@@ -278,25 +363,15 @@ namespace SAMP_Ex
             if(!SendOpcode('i'))
             {
                 if (String.IsNullOrWhiteSpace(this.Hostname))
-                    this.Hostname = "SAMP 0.3 Server";
+                    this.Hostname = "SAMP 0.3 Server (No response)";
 
                 return false;          
             }
 
-            if(Receive())
-            {
-                if (String.IsNullOrWhiteSpace(this.Hostname))
-                    this.Hostname = "SAMP 0.3 Server";
-
-                return true;
-            }
-            else
-            {
-                if (String.IsNullOrWhiteSpace(this.Hostname))
-                    this.Hostname = "SAMP 0.3 Server";
-
-                return false;
-            }
+			bool res = Receive();
+			if (String.IsNullOrWhiteSpace(this.Hostname))
+				this.Hostname = "SAMP 0.3 Server (No response)";
+			return res;
         }
 
         /// <summary>
@@ -309,15 +384,7 @@ namespace SAMP_Ex
             {
                 return false;
             }
-
-            if (Receive())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+			return Receive();
         }
 
         /// <summary>
@@ -331,14 +398,7 @@ namespace SAMP_Ex
                 return false;
             }
 
-            if (Receive())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+			return Receive();
         }
 
         /// <summary>
@@ -352,14 +412,7 @@ namespace SAMP_Ex
                 return false;
             }
 
-            if (Receive())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+			return Receive();
         }
 
         /// <summary>
@@ -369,8 +422,13 @@ namespace SAMP_Ex
         /// <returns>rule value</returns>
         public string GetRule(string rule)
         {
-            if (_rules.ContainsKey(rule))
-                return _rules[rule];
+            string tmpvalue = "";
+            if(_rules.TryGetValue(rule, out tmpvalue))
+            {
+                return tmpvalue;
+            }
+            /*if (_rules.ContainsKey(rule))
+                return _rules[rule];*/
             else
                 return String.Empty;
         }
@@ -379,7 +437,7 @@ namespace SAMP_Ex
         /// Get rules list
         /// </summary>
         /// <returns>A dictionary with rules name/value inside</returns>
-        public Dictionary<string, string> GetRulesList()
+        public ConcurrentDictionary<string, string> GetRulesList()
         {
             return _rules;
         }
@@ -388,7 +446,7 @@ namespace SAMP_Ex
         /// Get players list
         /// </summary>
         /// <returns>A dictionary with players name/score inside</returns>
-        public Dictionary<string, int> GetPlayersList()
+        public ConcurrentDictionary<string, int> GetPlayersList()
         {
             return _players;
         }

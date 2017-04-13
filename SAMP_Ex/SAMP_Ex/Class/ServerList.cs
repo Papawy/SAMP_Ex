@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using System.ComponentModel;
-
+using System.Net;
+using System.Net.Sockets;
 
 using System.Diagnostics;
 
@@ -57,6 +58,8 @@ namespace SAMP_Ex
             this.DataBindingComplete += ApplyColumnStyle;
             this.SelectionChanged += this.UpdateSelectedServerTick;
 
+			this.VirtualMode = false;
+
             updateTimer = new System.Timers.Timer();
 
             updateTimer.Interval = 3000;            
@@ -67,7 +70,7 @@ namespace SAMP_Ex
             selectedServerTimer.Interval = 500;
             selectedServerTimer.Elapsed += this.UpdateSelectedServerTick;
 
-        }
+		}
 
         /// <summary>
         /// Add a server to the server list
@@ -84,7 +87,7 @@ namespace SAMP_Ex
             this.SourceList = serverList;
             this.DataSource = serverList;
             this.Refresh();
-            this.UpdateAllServers();
+			this.UpdateVisibleServers();
 
             foreach (DataGridViewColumn col in this.Columns)
             {
@@ -107,7 +110,49 @@ namespace SAMP_Ex
             this.Update();
         }
 
-        public Server GetSelectedServer() { return (Server)this.Rows[this.CurrentCell.RowIndex].DataBoundItem; }
+		protected new void CellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
+		{
+			Server tmpSrv = (Server)this.SourceList[e.RowIndex];
+
+			switch (this.Columns[e.ColumnIndex].Name)
+			{
+				case "locked":
+					if (tmpSrv.HasPassword)
+						e.Value = LockedImage;
+					else
+						e.Value = UnlockedImage;
+					break;
+				case "Hostname":
+					e.Value = tmpSrv.Hostname;
+					break;
+				case "Players":
+					e.Value = tmpSrv.Players + "/" + tmpSrv.MaxPlayers;
+					break;
+				case "Gamemode":
+					e.Value = tmpSrv.Gamemode;
+					break;
+				case "MapName":
+					e.Value = tmpSrv.MapName;
+					break;
+				case "Language":
+					e.Value = tmpSrv.Language;
+					break;
+				case "Ping":
+					e.Value = tmpSrv.Ping;
+					break;
+			}
+		}
+
+        public Server GetSelectedServer() {
+                try
+                {
+                    return (Server)this.Rows[this.CurrentCell.RowIndex].DataBoundItem;
+                }
+                catch
+                {
+                    return new Server("127.0.0.1:7777");
+                }
+             }
 
         protected void ImageCellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -147,18 +192,42 @@ namespace SAMP_Ex
             }
         }
 
+		[System.Obsolete("UpdateAllServers is deprecated because of performance issues, use UpdatedVisibleServers instead.")]
         public void UpdateAllServers()
         {
-            foreach (Server server in SourceList)
-            {
-                server.TotalUpdate();
-            }
-        }
+			if(SourceList.Count < 16)
+			{
+				(new System.Threading.Thread(() => {
+					for (int i = 0; i < SourceList.Count; i++)
+					{
+						SourceList[i].TotalUpdate();
+					}
+				})).Start();
+			}
+			else
+			{
+			}
+		}
+
+		public void UpdateVisibleServers()
+		{
+			foreach(DataGridViewRow row in this.Rows)
+			{
+				if(row.Displayed)
+				{
+					(new System.Threading.Thread(() => {
+						SourceList[row.Index].TotalUpdate();
+					})).Start();
+				}
+			}
+		}
 
         public void UpdateSelectedServerTick(object sender, EventArgs e)
         {
-            this.GetSelectedServer().UpdatePing();
-            MethodInvoker inv = delegate
+			(new System.Threading.Thread(() => {
+				this.GetSelectedServer().UpdatePing();
+			})).Start();
+			MethodInvoker inv = delegate
             {
                 this.Refresh();
                 this.Update();
@@ -168,7 +237,7 @@ namespace SAMP_Ex
 
         public void UpdateTimerTick(object sender, EventArgs e)
         {
-            this.UpdateAllServers();
+            this.UpdateVisibleServers();
 
             MethodInvoker inv = delegate
             {

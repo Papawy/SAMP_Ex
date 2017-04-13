@@ -31,11 +31,10 @@ namespace SAMP_Ex
 
             grid_serverList.UpdateTimerInterval = 3000;
 
+            toolStripTxtBox_nickname.Text = ConfigFile.GetUserConfig("defaultnick");
+
             WebLists.Load("http://monitor.sacnr.com/list/masterlist.txt", "http://monitor.sacnr.com/list/hostedlist.txt");
-            WebLists.UpdateHostedList();
-            WebLists.UpdateInternetList();
             FavFile.GenerateFavList();
-            FavFile.UpdateFavList();
 
             grid_serverList.AddServerList(FavFile.FavList);
 
@@ -93,8 +92,21 @@ namespace SAMP_Ex
 
         private void toolStripBtn_connect_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine(grid_serverList.GetSelectedServer().GetVersion());
-            GTAUtils.ConnectClientTo(grid_serverList.GetSelectedServer(), false);
+            int nickOption = 0; // for debug purpose
+            string nick = ConfigFile.GetUserConfig("defaultnick");
+            if (chckBox_useNicknameDefault.Checked && (!String.IsNullOrWhiteSpace(toolStripTxtBox_nickname.Text)))
+            {
+                nickOption = 1;
+                nick = toolStripTxtBox_nickname.Text;
+            }
+            else if(!String.IsNullOrWhiteSpace( grid_serverList.GetSelectedServer().Nickname))
+            {
+                nickOption = 2;
+                nick = grid_serverList.GetSelectedServer().Nickname;
+            }
+            Debug.WriteLine("Version : " + grid_serverList.GetSelectedServer().GetVersion());
+            Debug.WriteLine("Nickname used ("+nickOption+") : " + nick);
+            GTAUtils.ConnectClientTo(grid_serverList.GetSelectedServer(), nick, false);
         }
 
         private void tabCtrl_serversLists_SelectedIndexChanged(object sender, EventArgs e)
@@ -127,7 +139,7 @@ namespace SAMP_Ex
 
         private void toolStripBtn_refreshServer_Click(object sender, EventArgs e)
         {
-            grid_serverList.UpdateAllServers();
+            grid_serverList.UpdateVisibleServers();
         }
 
         private void toolStripBtn_addServer_Click(object sender, EventArgs e)
